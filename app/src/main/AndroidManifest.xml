@@ -33,8 +33,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".FileActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="true"/>
 
         <!-- Other Activities -->
         <activity

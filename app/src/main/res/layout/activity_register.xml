@@ -21,6 +21,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bgimage" />
     <!-- Sign Up Button -->
+
+    <!-- Logo ImageView -->
+
+    <!-- Username EditText -->
+
+    <!-- Email EditText -->
+
     <Button
         android:id="@+id/btnregister"
         android:layout_width="169dp"
@@ -31,15 +38,11 @@
         android:text="Sign Up"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
+        android:fontFamily="@font/geologicaregular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/lnkLogin"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="@+id/lnkLogin" />
-
-    <!-- Logo ImageView -->
-
-    <!-- Username EditText -->
-
-    <!-- Email EditText -->
 
     <ImageView
         android:id="@+id/LogoLogIn"
@@ -64,6 +67,7 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColorHint="#000B54"
+        android:fontFamily="@font/geologicaregular"
         app:layout_constraintBottom_toTopOf="@id/txtEmail"
         app:layout_constraintEnd_toEndOf="@+id/txtEmail"
         app:layout_constraintHorizontal_bias="0.508"
@@ -83,6 +87,7 @@
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textColorHint="#000B54"
+        android:fontFamily="@font/geologicaregular"
         app:layout_constraintBottom_toTopOf="@id/txtPwd"
         app:layout_constraintEnd_toEndOf="@+id/txtPwd"
         app:layout_constraintHorizontal_bias="0.508"
@@ -103,6 +108,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColorHint="#000B54"
+        android:fontFamily="@font/geologicaregular"
         app:layout_constraintBottom_toTopOf="@id/btnregister"
         app:layout_constraintEnd_toEndOf="@+id/btnregister"
         app:layout_constraintHorizontal_bias="0.491"
@@ -120,6 +126,7 @@
         android:textColor="#0059C7"
         android:textSize="15dp"
         android:textStyle="bold|normal"
+        android:fontFamily="@font/geologicaregular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnregister"
@@ -133,7 +140,7 @@
         android:text="Together for better health — register now!"
         android:textColor="#0540D7"
         android:textSize="25sp"
-        android:textStyle="italic"
+        android:fontFamily="@font/geologicaregular"
         app:layout_constraintBottom_toTopOf="@+id/LogoLogIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

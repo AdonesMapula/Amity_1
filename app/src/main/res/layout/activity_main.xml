@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,14 +9,15 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="89dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="391dp"
+        android:layout_height="86dp"
         android:background="#DCE8FF"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
@@ -63,17 +65,17 @@
 
     </LinearLayout>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="370dp"
-        android:layout_height="210dp"
+        android:layout_width="364dp"
+        android:layout_height="300dp"
         android:background="@drawable/rounded_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.802">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <Button
             android:id="@+id/addPatient"
@@ -81,12 +83,13 @@
             android:layout_height="48dp"
             android:background="@drawable/edittext_shadow"
             android:backgroundTint="#0064F7"
+            android:fontFamily="@font/geologicaregular"
             android:text="@string/add_patient"
             android:textColor="#FFFFFF"
-            android:textSize="15sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/addFiles"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintHorizontal_bias="0.452"
             app:layout_constraintStart_toEndOf="@+id/addFiles"
             app:layout_constraintTop_toTopOf="@+id/addFiles"
             app:layout_constraintVertical_bias="0.0"
@@ -98,83 +101,128 @@
             android:layout_height="48dp"
             android:background="@drawable/edittext_shadow"
             android:backgroundTint="#0064F7"
+            android:fontFamily="@font/geologicaregular"
             android:text="@string/add_files"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.196"
+            app:layout_constraintHorizontal_bias="0.174"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.901"
+            app:layout_constraintVertical_bias="0.977"
             tools:ignore="TextSizeCheck" />
 
         <EditText
             android:id="@+id/ptntsNameTxt"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="128dp"
             android:ems="10"
+            android:fontFamily="@font/geologicaregular"
             android:hint="Patient's Name"
             android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/dateCheckTxt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/ptntsAddressTxt"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ptntsAddressTxt"
+            app:layout_constraintStart_toStartOf="@+id/ptntsAddressTxt"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <EditText
+            android:id="@+id/ptntsAddressTxt"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:fontFamily="@font/geologicaregular"
+            android:hint="Patient's Address"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/dateCheckTxt"
+            app:layout_constraintEnd_toEndOf="@+id/ptntsPhoneTxt"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/ptntsPhoneTxt"
+            app:layout_constraintStart_toStartOf="@+id/ptntsPhoneTxt"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.376" />
+
+        <EditText
+            android:id="@+id/ptntsPhoneTxt"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:fontFamily="@font/geologicaregular"
+            android:hint="Patient's Phone Number"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/dateCheckTxt"
+            app:layout_constraintEnd_toEndOf="@+id/dateCheckTxt"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintStart_toStartOf="@+id/dateCheckTxt"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.838" />
+
+        <TextView
             android:id="@+id/dateCheckTxt"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:ems="10"
+            android:background="@drawable/rounded_bg_blue"
+            android:fontFamily="@font/geologicaregular"
+            android:gravity="center"
             android:hint="Date of Check-up"
-            android:inputType="text"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.745" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="370dp"
-        android:layout_height="350dp"
+        android:layout_width="366dp"
+        android:layout_height="265dp"
         android:background="@drawable/rounded_bg_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154">
+        app:layout_constraintVertical_bias="0.135">
 
         <!-- ViewPager2 for Graphs -->
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="360dp"
+            android:layout_height="263dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <TextView
         android:id="@+id/welcomeTxt"
-        android:layout_width="141dp"
-        android:layout_height="43dp"
+        android:layout_width="163dp"
+        android:layout_height="47dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/geologicaregular"
         android:text="@string/welcome"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintHorizontal_bias="0.104"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Regular font weight -->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/geologicaregular" />
+
+    <!-- Bold font weight -->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="700"
+        android:font="@font/geologicabold" />
+
+    <!-- light font weight -->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="100"
+        android:font="@font/geologicalight" />
+
+</font-family>

@@ -1,7 +1,6 @@
 package com.example.amity_1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientViewHolder> implements Filterable {
-    private List<Patient> patientList;
-    private List<Patient> patientListFull; // Full list for filtering
+    private List<Patient> patientList; // Original list
+    private List<Patient> patientListFull; // Copy of original list
     private Context context;
 
     public PatientAdapter(List<Patient> patientList, Context context) {
         this.patientList = patientList;
         this.context = context;
-        patientListFull = new ArrayList<>(patientList);
+        patientListFull = new ArrayList<>(patientList); // Create a copy for filtering
     }
 
     @NonNull
@@ -35,15 +34,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
     @Override
     public void onBindViewHolder(@NonNull PatientViewHolder holder, int position) {
         Patient currentPatient = patientList.get(position);
-        holder.nameTextView.setText(currentPatient.getName());
-        holder.phoneTextView.setText(currentPatient.getPhone());
-
-        // Set up click listener to view patient file
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, PatientFileActivity.class);
-            intent.putExtra("FILE_ID", currentPatient.getFileId());
-            context.startActivity(intent);
-        });
+        holder.patientNameTextView.setText(currentPatient.getName());
+        holder.patientPhoneTextView.setText(currentPatient.getPhoneNumber());
+        holder.patientAddressTextView.setText(currentPatient.getAddress());
+        holder.checkupDateTextView.setText(currentPatient.getCheckupDate());
     }
 
     @Override
@@ -53,42 +47,51 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
     @Override
     public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                List<Patient> filteredList = new ArrayList<>();
-                if (constraint == null || constraint.length() == 0) {
-                    filteredList.addAll(patientListFull);
-                } else {
-                    String filterPattern = constraint.toString().toLowerCase().trim();
-                    for (Patient patient : patientListFull) {
-                        if (patient.getName().toLowerCase().contains(filterPattern)) {
-                            filteredList.add(patient);
-                        }
-                    }
-                }
-                FilterResults results = new FilterResults();
-                results.values = filteredList;
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                patientList.clear();
-                patientList.addAll((List) results.values);
-                notifyDataSetChanged();
-            }
-        };
+        return patientFilter;
     }
 
-    static class PatientViewHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView;
-        TextView phoneTextView;
+    private Filter patientFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Patient> filteredPatients = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredPatients.addAll(patientListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Patient patient : patientListFull) {
+                    if (patient.getName().toLowerCase().contains(filterPattern) ||
+                            patient.getPhoneNumber().toLowerCase().contains(filterPattern) ||
+                            patient.getAddress().toLowerCase().contains(filterPattern)) {
+                        filteredPatients.add(patient);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredPatients;
+            return results;
+        }
 
-        PatientViewHolder(@NonNull View itemView) {
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            patientList.clear();
+            patientList.addAll((List<Patient>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    static class PatientViewHolder extends RecyclerView.ViewHolder {
+        TextView patientNameTextView;
+        TextView patientPhoneTextView;
+        TextView patientAddressTextView;
+        TextView checkupDateTextView;
+
+        public PatientViewHolder(@NonNull View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.patientNameTextView);
-            phoneTextView = itemView.findViewById(R.id.patientPhoneTextView);
+            patientNameTextView = itemView.findViewById(R.id.patientNameTextView);
+            patientPhoneTextView = itemView.findViewById(R.id.patientPhoneTextView);
+            patientAddressTextView = itemView.findViewById(R.id.patientAddressTextView);
+            checkupDateTextView = itemView.findViewById(R.id.checkupDateTextView);
         }
     }
 }
