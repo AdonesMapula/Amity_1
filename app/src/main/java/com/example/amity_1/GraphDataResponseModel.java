@@ -1,43 +1,24 @@
 package com.example.amity_1;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 public class GraphDataResponseModel {
+    private List<GraphData> data;
 
-    @SerializedName("success")
-    private String success;
-
-    @SerializedName("data")
-    private GraphDataModel data;
-
-    public String getSuccess() {
-        return success;
-    }
-
-    public GraphDataModel getData() {
+    public List<GraphData> getData() {
         return data;
     }
+    public class GraphData {
+        private double xValue;
+        private double yValue;
 
-    public class GraphDataModel {
-        @SerializedName("daily")
-        private int daily;
-
-        @SerializedName("weekly")
-        private int weekly;
-
-        @SerializedName("monthly")
-        private int monthly;
-
-        public int getDaily() {
-            return daily;
+        public double getXValue() {
+            return xValue;
         }
 
-        public int getWeekly() {
-            return weekly;
-        }
-
-        public int getMonthly() {
-            return monthly;
+        public double getYValue() {
+            return yValue;
         }
     }
 }
+

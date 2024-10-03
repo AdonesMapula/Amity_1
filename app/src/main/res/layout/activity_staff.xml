@@ -8,7 +8,7 @@
     tools:context=".StaffActivity">
 
     <Button
-        android:id="@+id/addFiles2"
+        android:id="@+id/logoutBtn"
         android:layout_width="350dp"
         android:layout_height="48dp"
         android:background="@drawable/edittext_shadow"

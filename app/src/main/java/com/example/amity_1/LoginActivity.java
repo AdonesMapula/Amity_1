@@ -1,19 +1,21 @@
 package com.example.amity_1;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,8 +28,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
+        // Check if the user is already logged in
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_NAME, MODE_PRIVATE);
+        boolean isLoggedIn = preferences.getBoolean(Constants.KEY_ISE_LOGGED_IN, false);
+        if (isLoggedIn) {
+            // If logged in, redirect to MainActivity
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish(); // Close LoginActivity
+            return; // Exit onCreate
+        }
+
+        setContentView(R.layout.activity_login);
         initializeUI();
         setupListeners();
     }

@@ -2,7 +2,8 @@ package com.example.amity_1;
 
 import java.util.HashMap;
 
-import okhttp3.ResponseBody;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -10,8 +11,6 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.Part;
 
 public interface NetworkService {
@@ -50,9 +49,11 @@ public interface NetworkService {
 
     // Retrieve monthly patients data
     @GET("fetch_monthly_data.php")
-    Call<PatientResponseModel> getPatientsData();
+    Call<GraphDataResponseModel> getMonthlyGraphData();
 
-    // Retrieve graph data
-    @POST("get_graph_data.php")
-    Call<GraphDataResponseModel> getGraphData();
+    @GET("fetch_daily_data.php")
+    Call<GraphDataResponseModel> getWeeklyGraphData();
+
+    @GET("fetch_daily_data.php")
+    Call<GraphDataResponseModel> getDailyGraphData();
 }

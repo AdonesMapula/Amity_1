@@ -1,12 +1,20 @@
 package com.example.amity_1;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,49 +22,76 @@ import retrofit2.Response;
 
 public class MonthlyGraphFragment extends Fragment {
 
-    private NetworkService apiService; // Declare the API service
+    private GraphView graph;
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_monthly_graph, container, false);
-        initializeRetrofit(); // Initialize Retrofit
-        fetchPatients(); // Fetch patient data
-        return view;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_monthly_graph, container, false);
+        graph = rootView.findViewById(R.id.graph); // Ensure your layout has a GraphView with this ID
+
+        // Fetch and display data
+        fetchGraphData();
+
+        return rootView;
     }
 
-    private void initializeRetrofit() {
-        apiService = NetworkClient.getClient().create(NetworkService.class); // Replace with your RetrofitClient instance
-    }
+    private void fetchGraphData() {
+        NetworkService apiService = NetworkClient.getClient().create(NetworkService.class);
+        Call<GraphDataResponseModel> call = apiService.getMonthlyGraphData(); // Use your API endpoint here
 
-    private void fetchPatients() {
-        apiService.getPatients().enqueue(new Callback<PatientResponseModel>() {
+        call.enqueue(new Callback<GraphDataResponseModel>() {
             @Override
-            public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
+            public void onResponse(Call<GraphDataResponseModel> call, Response<GraphDataResponseModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    String success = response.body().getSuccess();
-                    String message = response.body().getMessage();
-
-                    // Check if the success flag indicates a successful retrieval
-                    if ("true".equals(success)) {
-                        // Use success and message as needed
-                        // For example, show a toast or update the UI
-                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Handle case when success is not true
-                        Toast.makeText(getContext(), "Data retrieval failed: " + message, Toast.LENGTH_SHORT).show();
-                    }
+                    // Assuming response.body().getData() returns a list of your data points
+                    List<GraphDataResponseModel.GraphData> graphDataList = response.body().getData();
+                    displayGraphData(graphDataList);
                 } else {
-                    // Handle the case when the response is not successful
-                    Toast.makeText(getContext(), "Failed to retrieve data", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Failed to fetch graph data: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<PatientResponseModel> call, Throwable t) {
-                // Handle failure
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<GraphDataResponseModel> call, Throwable t) {
+//                Toast.makeText(getContext(), "Network Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void displayGraphData(List<GraphDataResponseModel.GraphData> graphDataList) {
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+
+        for (GraphDataResponseModel.GraphData data : graphDataList) {
+            // Assuming GraphData has methods to get x and y values
+            series.appendData(new DataPoint(data.getXValue(), data.getYValue()), true, graphDataList.size());
+        }
+
+        // Set series color and other attributes
+        series.setColor(Color.GREEN); // Change to desired color
+        series.setThickness(8); // Set line thickness
+        series.setDrawDataPoints(true); // Enable drawing data points
+        series.setDataPointsRadius(10); // Set radius for data points
+        series.setAnimated(true); // Enable animation
+
+        // Set background color for the graph
+        graph.setBackgroundColor(Color.WHITE); // Set background color
+
+        // Add the series to the graph
+        graph.addSeries(series);
+
+        // Optional: Customize grid colors
+        graph.getGridLabelRenderer().setGridColor(Color.GRAY);
+        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
+
+        // Customize the viewport
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(31); // Assuming the maximum days in a month
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(12); // Adjust this according to your data
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setXAxisBoundsManual(true);
     }
 }

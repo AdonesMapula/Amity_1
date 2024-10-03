@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
     <!-- Required Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,7 +10,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Amity_1">
-
+        <activity
+            android:name=".MonthlyGraphFragment"
+            android:exported="false" />
         <!-- Main Launcher Activity -->
         <activity
             android:name=".LoginActivity"
@@ -19,11 +20,10 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Other Activities using Keyboard -->
+        </activity> <!-- Other Activities using Keyboard -->
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -33,16 +33,13 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".FileActivity"
-            android:exported="true"/>
-
-        <!-- Other Activities -->
+            android:exported="true" /> <!-- Other Activities -->
         <activity
             android:name=".StaffActivity"
             android:exported="true" />
         <activity
             android:name=".PatientFileActivity"
             android:exported="true" />
-
     </application>
 
 </manifest>

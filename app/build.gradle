@@ -22,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -29,17 +30,19 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1' // AppCompat library
+    implementation 'com.google.android.material:material:1.10.0' // Material Design components
+    implementation 'androidx.activity:activity:1.6.1' // Activity library
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4' // ConstraintLayout library
+    implementation 'com.android.volley:volley:1.2.1' // Volley library for networking
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0' // Retrofit for API calls
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0' // Gson converter for Retrofit
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3' // OkHttp logging interceptor
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0' // OkHttp library
+    implementation 'com.jjoe64:graphview:4.2.2' // GraphView library for graph plotting
 
-    implementation libs.appcompat
-    implementation libs.material
-    implementation libs.activity
-    implementation libs.constraintlayout
-    implementation libs.volley
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    // Testing dependencies
+    testImplementation 'junit:junit:4.13.2' // JUnit for unit tests
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5' // JUnit extension for Android
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1' // Espresso for UI testing
 }
