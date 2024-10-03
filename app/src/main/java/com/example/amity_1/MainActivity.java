@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private NetworkService apiService; // Retrofit API service instance
+    private String patientName; // Keep track of the patient name for upload
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +86,14 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-            uploadDocument(imageBitmap); // Upload the scanned document
+
+            // Upload the scanned document with the patient name
+            uploadDocument(imageBitmap, patientName);
         }
     }
 
     // Method to upload a document (image) to the database
-    private void uploadDocument(Bitmap imageBitmap) {
-        String patientName = ((EditText) findViewById(R.id.ptntsNameTxt)).getText().toString();
+    private void uploadDocument(Bitmap imageBitmap, String patientName) {
         if (!patientName.isEmpty()) {
             RequestBody patientNamePart = RequestBody.create(MediaType.parse("text/plain"), patientName);
             File file = convertBitmapToFile(imageBitmap);
@@ -119,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Method to add a patient record to the database
+    // Method to add a patient record to the database and then upload a document
     private void addPatientToDatabase() {
-        String patientName = ((EditText) findViewById(R.id.ptntsNameTxt)).getText().toString();
+        patientName = ((EditText) findViewById(R.id.ptntsNameTxt)).getText().toString();
         String checkupDate = ((EditText) findViewById(R.id.dateCheckTxt)).getText().toString();
 
         if (!patientName.isEmpty() && !checkupDate.isEmpty()) {
@@ -130,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(MainActivity.this, "Patient added successfully", Toast.LENGTH_SHORT).show();
+
+                        // After adding the patient, launch the camera to capture and upload a document
+                        launchCamera();
+
                     } else {
                         Toast.makeText(MainActivity.this, "Failed to add patient: " + response.message(), Toast.LENGTH_SHORT).show();
                     }
@@ -158,13 +163,13 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to open the file activity
     private void openFileActivity() {
-        Intent intent = new Intent(this, FileActivity.class); // Replace with your file activity
+        Intent intent = new Intent(this, FileActivity.class);
         startActivity(intent);
     }
 
     // Method to open the staff page
     private void openStaffPage() {
-        Intent intent = new Intent(this, StaffActivity.class); // Replace with your staff activity
+        Intent intent = new Intent(this, StaffActivity.class);
         startActivity(intent);
     }
 }

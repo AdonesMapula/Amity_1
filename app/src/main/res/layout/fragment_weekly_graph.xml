@@ -2,13 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/rounded_bg_blue">
 
     <!-- Add the graph view or placeholders here -->
     <TextView
         android:id="@+id/weekly_graph"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Daily Graph" />
+        android:layout_width="168dp"
+        android:layout_height="74dp"
+        android:gravity="center"
+        android:text="Weekly Graph"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
 
 </LinearLayout>

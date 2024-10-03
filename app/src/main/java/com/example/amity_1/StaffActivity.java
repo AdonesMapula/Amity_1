@@ -3,6 +3,7 @@ package com.example.amity_1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button; // Import Button class
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -37,6 +38,9 @@ public class StaffActivity extends AppCompatActivity {
 
         // Set up image buttons
         setupImageButtons();
+
+        // Setup logout button
+        setupLogoutButton();
     }
 
     private void setupImageButtons() {
@@ -49,6 +53,26 @@ public class StaffActivity extends AppCompatActivity {
         staffBtn.setOnClickListener(v -> {
             // Toast to indicate the user is already in Staff Activity
         });
+    }
+
+    private void setupLogoutButton() {
+        Button logoutBtn = findViewById(R.id.addFiles2);
+        logoutBtn.setOnClickListener(v -> logout());
+    }
+
+    private void logout() {
+        // Clear user session data if you have any
+        // For example, you might want to clear shared preferences
+        // SharedPreferences sharedPreferences = getSharedPreferences("YourPrefs", MODE_PRIVATE);
+        // SharedPreferences.Editor editor = sharedPreferences.edit();
+        // editor.clear();
+        // editor.apply();
+
+        // Navigate back to the LoginActivity
+        Intent intent = new Intent(this, LoginActivity.class); // Replace with your login activity
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the activity stack
+        startActivity(intent);
+        finish(); // Optional: Call finish() if you want to close the current activity
     }
 
     private void openHomeActivity() {

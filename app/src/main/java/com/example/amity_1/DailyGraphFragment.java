@@ -15,6 +15,19 @@ public class DailyGraphFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_daily_graph, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_daily_graph, container, false);
+
+        // Initialize views or components here (if any)
+        // Example: LineChart lineChart = rootView.findViewById(R.id.lineChart);
+
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Perform operations after the view has been created
+        // Example: Set up data for charts, initialize listeners, etc.
     }
 }
