@@ -62,13 +62,15 @@ public class FileActivity extends AppCompatActivity {
 
     private void fetchPatientsFromDatabase() {
         NetworkService apiService = NetworkClient.getClient().create(NetworkService.class);
-        Call<ResponseBody> call = apiService.getPatients();
+        Call<PatientResponseModel> call = apiService.getPatients(); // Use PatientResponseModel here
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<PatientResponseModel>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Patient> patients = parsePatientsFromResponse(response.body());
+                    // Assuming the response model has a method to get the list of patients
+                    List<Patient> patients = response.body().getData(); // Fetch patient data directly
+
                     if (patients.isEmpty()) {
                         Toast.makeText(FileActivity.this, "No patients found", Toast.LENGTH_SHORT).show();
                     } else {
@@ -82,40 +84,10 @@ public class FileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<PatientResponseModel> call, Throwable t) {
                 Toast.makeText(FileActivity.this, "Network Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-
-
-    private List<Patient> parsePatientsFromResponse(ResponseBody responseBody) {
-        try {
-            String json = responseBody.string(); // Convert the response body to a string
-            // Assuming your JSON response structure includes a "patients" array
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray("patients");
-
-            List<Patient> patients = new ArrayList<>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject patientObject = jsonArray.getJSONObject(i);
-                Patient patient = new Patient(
-                        patientObject.getString("id"),
-                        patientObject.getString("name"),
-                        patientObject.getString("phone_number"),
-                        patientObject.getString("address"),
-                        patientObject.getString("checkup_date"), // Include the checkup date
-                        patientObject.getString("created_at"), // Include created_at
-                        patientObject.getString("updated_at") // Include updated_at
-                );
-                patients.add(patient);
-            }
-            return patients;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>(); // Return empty list on error
-        }
     }
 
     private void setupSearchView() {

@@ -110,7 +110,7 @@
         android:layout_width="208dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
-        android:text="@string/medical_records"
+        android:text="Patient's Records"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"

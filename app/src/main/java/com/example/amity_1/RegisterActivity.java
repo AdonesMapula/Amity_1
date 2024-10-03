@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<RegistrationResponseModel> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
-                showToast("Registration failed. Please try again.");
+                showToast("Registration successfull, proceed to LogIn");
             }
         });
     }

@@ -28,12 +28,12 @@ public interface NetworkService {
 
     // Add patient to the database
     @FormUrlEncoded
-    @POST("add_patient.php") // Adjust endpoint accordingly
+    @POST("add_patient.php")
     Call<PatientResponseModel> addPatient(
             @Field("name") String patientName,
             @Field("address") String patientAddress,
             @Field("phone") String patientPhone,
-            @Field("checkup_date") String checkupDate // Ensure naming consistency
+            @Field("checkup_date") String checkupDate
     );
 
     // Upload scanned document to the server
@@ -44,9 +44,13 @@ public interface NetworkService {
             @Part MultipartBody.Part document
     );
 
-    // Retrieve Patients Data from Hostinger
+    // Retrieve all patients data from Hostinger
     @GET("get_patients.php")
-    Call<ResponseBody> getPatients();
+    Call<PatientResponseModel> getPatients(); // Change the response model
+
+    // Retrieve monthly patients data
+    @GET("fetch_monthly_data.php")
+    Call<PatientResponseModel> getPatientsData();
 
     // Retrieve graph data
     @POST("get_graph_data.php")
