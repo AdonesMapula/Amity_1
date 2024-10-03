@@ -42,6 +42,10 @@ public interface NetworkService {
             @Part("patient_name") RequestBody patientName,
             @Part MultipartBody.Part document
     );
+    @Multipart
+    @POST("upload.php") // Adjust this to your actual upload endpoint on Hostinger
+    Call<UploadResponseModel> uploadToHostingerGallery(@Part MultipartBody.Part file);
+
 
     // Retrieve all patients data from Hostinger
     @GET("get_patients.php")

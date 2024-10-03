@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log; // Import Log class
+import android.util.Log;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -109,6 +108,11 @@ public class MainActivity extends AppCompatActivity {
                     String message = response.isSuccessful() ? "Document uploaded successfully" : "Failed to upload document: " + response.message();
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                     Log.d(TAG, message); // Log the response message
+
+                    if (response.isSuccessful()) {
+                        // After successful upload, upload the image to the Hostinger gallery
+                        uploadToHostingerGallery(file);
+                    }
                 }
 
                 @Override
@@ -122,6 +126,36 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Image conversion failed", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void uploadToHostingerGallery(File file) {
+        // Define the URL to your Hostinger gallery
+        String uploadUrl = "https://cornflowerblue-quetzal-932463.hostingersite.com/uploads/";
+
+        // Create a new RequestBody for the file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        // Create a Retrofit interface method for uploading to Hostinger
+        apiService.uploadToHostingerGallery(body).enqueue(new Callback<UploadResponseModel>() {
+            @Override
+            public void onResponse(Call<UploadResponseModel> call, Response<UploadResponseModel> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, "Image uploaded to Hostinger gallery successfully", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Image uploaded to Hostinger gallery successfully");
+                } else {
+                    Toast.makeText(MainActivity.this, "Failed to upload image to Hostinger gallery: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Failed to upload image to Hostinger gallery: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadResponseModel> call, Throwable t) {
+                Log.e(TAG, "Image upload to Hostinger gallery failed", t);
+                Toast.makeText(MainActivity.this, "Image upload to Hostinger gallery failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void addPatientToDatabase() {
         collectPatientData();
