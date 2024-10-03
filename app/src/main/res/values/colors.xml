@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="your_light_primary">#FF6200EE</color> <!-- Customize your primary color -->
+    <color name="your_light_on_primary">#FFFFFF</color> <!-- Text color on primary -->
+    <color name="your_light_secondary">#FF03DAC5</color> <!-- Customize your secondary color -->
+    <color name="your_light_on_secondary">#000000</color> <!-- Text color on secondary -->
+<!-- Add other colors as needed -->
+</resources>
