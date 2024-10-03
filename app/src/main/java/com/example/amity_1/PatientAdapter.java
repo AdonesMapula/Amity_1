@@ -21,7 +21,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
     public PatientAdapter(List<Patient> patientList, Context context) {
         this.patientList = patientList;
         this.context = context;
-        patientListFull = new ArrayList<>(patientList); // Create a copy for filtering
+        this.patientListFull = new ArrayList<>(patientList); // Create a copy for filtering
     }
 
     @NonNull
@@ -34,10 +34,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
     @Override
     public void onBindViewHolder(@NonNull PatientViewHolder holder, int position) {
         Patient currentPatient = patientList.get(position);
-        holder.patientNameTextView.setText(currentPatient.getName());
-        holder.patientPhoneTextView.setText(currentPatient.getPhoneNumber());
-        holder.patientAddressTextView.setText(currentPatient.getAddress());
-        holder.checkupDateTextView.setText(currentPatient.getCheckupDate());
+        holder.bind(currentPatient);
     }
 
     @Override
@@ -47,10 +44,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
     @Override
     public Filter getFilter() {
-        return patientFilter;
+        return new PatientFilter();
     }
 
-    private Filter patientFilter = new Filter() {
+    private class PatientFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Patient> filteredPatients = new ArrayList<>();
@@ -78,7 +75,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
             patientList.addAll((List<Patient>) results.values);
             notifyDataSetChanged();
         }
-    };
+    }
 
     static class PatientViewHolder extends RecyclerView.ViewHolder {
         TextView patientNameTextView;
@@ -92,6 +89,13 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
             patientPhoneTextView = itemView.findViewById(R.id.patientPhoneTextView);
             patientAddressTextView = itemView.findViewById(R.id.patientAddressTextView);
             checkupDateTextView = itemView.findViewById(R.id.checkupDateTextView);
+        }
+
+        public void bind(Patient patient) {
+            patientNameTextView.setText(patient.getName());
+            patientPhoneTextView.setText(patient.getPhoneNumber());
+            patientAddressTextView.setText(patient.getAddress());
+            checkupDateTextView.setText(patient.getCheckupDate());
         }
     }
 }

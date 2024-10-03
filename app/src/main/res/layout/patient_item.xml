@@ -6,12 +6,26 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/checkupDateTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/geologicaregular"
+        android:text="@string/check_up_date"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/patientAddressTextView" />
+
+    <TextView
         android:id="@+id/patientNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:fontFamily="@font/geologicaregular"
         android:text="@string/patient_name"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,6 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:fontFamily="@font/geologicaregular"
         android:text="@string/phone_number"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,20 +47,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:fontFamily="@font/geologicaregular"
         android:text="@string/address"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/patientPhoneTextView" />
-
-    <TextView
-        android:id="@+id/checkupDateTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/check_up_date"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/patientAddressTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
