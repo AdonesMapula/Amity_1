@@ -34,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String EMPTY_FIELD_MESSAGE = "Please fill in all fields";
-    private static final String TAG = "MainActivity"; // Define a tag for logging
+    private static final String TAG = "MainActivity";
 
     private NetworkService apiService;
-    private String patientName, patientAddress, patientPhone, checkupDate;
-    private TextView dateCheckTxt;
+    private String patientName, patientAddress, patientPhone, checkupDate, patientDOB, patientGender, patientStatus;
+    private TextView dateCheckTxt, dateBirth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeUI() {
         dateCheckTxt = findViewById(R.id.dateCheckTxt);
+        dateBirth = findViewById(R.id.dateBirth);
         Button addFilesButton = findViewById(R.id.addFiles);
         Button addPatientButton = findViewById(R.id.addPatient);
         ImageButton fileButton = findViewById(R.id.fileBtn);
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         fileButton.setOnClickListener(v -> openActivity(FileActivity.class));
         staffButton.setOnClickListener(v -> openActivity(StaffActivity.class));
         dateCheckTxt.setOnClickListener(v -> showDatePickerDialog());
+        dateBirth.setOnClickListener(v -> showDatePickerDialog1());
     }
 
     private void initializeRetrofit() {
@@ -243,14 +245,34 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 R.style.CustomDatePickerTheme, // Apply your custom theme here
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    checkupDate = selectedYear + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + String.format("%02d", selectedDay); // Format date as YYYY-MM-DD
+                    checkupDate = "Date of Check-up: "+selectedYear + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + String.format("%02d", selectedDay); // Format date as YYYY-MM-DD
                     dateCheckTxt.setText(checkupDate);
                     Log.d(TAG, "Selected date: " + checkupDate); // Log the selected date
                 },
                 year, month, day
+        );// Show the dialog
+        datePickerDialog.show();
+    }
+    private void showDatePickerDialog1() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog2 = new DatePickerDialog(
+                this,
+                R.style.CustomDatePickerTheme, // Apply your custom theme here
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    patientDOB = "Date of Birth: "+selectedYear + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + String.format("%02d", selectedDay); // Format date as YYYY-MM-DD
+                    dateBirth.setText(patientDOB);
+                    Log.d(TAG, "Selected date: " + patientDOB); // Log the selected date
+                },
+                year, month, day
         );
 
-        datePickerDialog.show(); // Show the dialog
+        datePickerDialog2.show();
+
+
     }
 
 

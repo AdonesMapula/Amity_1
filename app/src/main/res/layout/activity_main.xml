@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="391dp"
-        android:layout_height="86dp"
+        android:layout_width="413dp"
+        android:layout_height="88dp"
         android:background="#DCE8FF"
         android:gravity="center"
         android:orientation="horizontal"
@@ -64,8 +64,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="364dp"
-        android:layout_height="300dp"
+        android:layout_width="389dp"
+        android:layout_height="295dp"
         android:background="@drawable/rounded_bg"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,118 +73,145 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
-        <Button
-            android:id="@+id/addPatient"
-            android:layout_width="120dp"
-            android:layout_height="48dp"
-            android:background="@drawable/edittext_shadow"
-            android:backgroundTint="#0064F7"
-            android:fontFamily="@font/geologicaregular"
-            android:text="@string/add_patient"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/addFiles"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.452"
-            app:layout_constraintStart_toEndOf="@+id/addFiles"
-            app:layout_constraintTop_toTopOf="@+id/addFiles"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="TextSizeCheck" />
-
-        <Button
-            android:id="@+id/addFiles"
-            android:layout_width="120dp"
-            android:layout_height="48dp"
-            android:background="@drawable/edittext_shadow"
-            android:backgroundTint="#0064F7"
-            android:fontFamily="@font/geologicaregular"
-            android:text="@string/add_files"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
+        <ScrollView
+            android:layout_width="333dp"
+            android:layout_height="285dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.174"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.977"
-            tools:ignore="TextSizeCheck" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/ptntsNameTxt"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="128dp"
-            android:ems="10"
-            android:fontFamily="@font/geologicaregular"
-            android:hint="Patient's Name"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/dateCheckTxt"
-            app:layout_constraintEnd_toEndOf="@+id/ptntsAddressTxt"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/ptntsAddressTxt"
-            app:layout_constraintStart_toStartOf="@+id/ptntsAddressTxt"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <EditText
-            android:id="@+id/ptntsAddressTxt"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:fontFamily="@font/geologicaregular"
-            android:hint="Patient's Address"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/dateCheckTxt"
-            app:layout_constraintEnd_toEndOf="@+id/ptntsPhoneTxt"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/ptntsPhoneTxt"
-            app:layout_constraintStart_toStartOf="@+id/ptntsPhoneTxt"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.376" />
+                <EditText
+                    android:id="@+id/ptntsNameTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/geologicaregular"
+                    android:hint="Patient's Name"
+                    android:inputType="text"
+                    android:padding="10dp" />
 
-        <EditText
-            android:id="@+id/ptntsPhoneTxt"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:fontFamily="@font/geologicaregular"
-            android:hint="Patient's Phone Number"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/dateCheckTxt"
-            app:layout_constraintEnd_toEndOf="@+id/dateCheckTxt"
-            app:layout_constraintHorizontal_bias="0.45"
-            app:layout_constraintStart_toStartOf="@+id/dateCheckTxt"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.838" />
+                <EditText
+                    android:id="@+id/ptntsAddressTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/geologicaregular"
+                    android:hint="Patient's Address"
+                    android:inputType="text"
+                    android:padding="10dp" />
 
-        <TextView
-            android:id="@+id/dateCheckTxt"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:background="@drawable/rounded_bg_blue"
-            android:fontFamily="@font/geologicaregular"
-            android:gravity="center"
-            android:hint="Date of Check-up"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="#FFFFFF"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.491"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.745" />
+                <EditText
+                    android:id="@+id/ptntsPhoneTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/geologicaregular"
+                    android:hint="Patient's Phone Number"
+                    android:inputType="text"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/ptntsGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/geologicaregular"
+                    android:hint="Gender"
+                    android:inputType="text"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/ptntsStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/geologicaregular"
+                    android:hint="Marital Status"
+                    android:inputType="text"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/ptntsStatus2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/geologicaregular"
+                    android:hint="Vital signs"
+                    android:inputType="text"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/dateBirth"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_bg_blue"
+                    android:fontFamily="@font/geologicaregular"
+                    android:gravity="center"
+                    android:hint="Date of Birth"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/dateCheckTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_bg_blue"
+                    android:fontFamily="@font/geologicaregular"
+                    android:gravity="center"
+                    android:hint="Date of Check-up"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/addFiles"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#0064F7"
+                    android:fontFamily="@font/geologicaregular"
+                    android:text="Upload files"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/addPatient"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#0064F7"
+                    android:fontFamily="@font/geologicaregular"
+                    android:text="@string/add_patient"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="362dp"
-        android:layout_height="291dp"
+        android:layout_width="387dp"
+        android:layout_height="284dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/rounded_bg_blue"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"

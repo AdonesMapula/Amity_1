@@ -28,12 +28,12 @@ public class StaffActivity extends AppCompatActivity {
         staffList = new ArrayList<>();
 
         // Sample staff data (you can replace this with your actual data)
-        staffList.add(new Staff("Dr. John Doe", "Doctor", R.drawable.logo));
-        staffList.add(new Staff("Nurse Jane Smith", "Nurse", R.drawable.logo));
-        staffList.add(new Staff("Dr. John Doe", "Doctor", R.drawable.logo));
-        staffList.add(new Staff("Nurse Jane Smith", "Nurse", R.drawable.logo));
-        staffList.add(new Staff("Dr. John Doe", "Doctor", R.drawable.logo));
-        staffList.add(new Staff("Nurse Jane Smith", "Nurse", R.drawable.logo));
+        staffList.add(new Staff("Dr. Cristian Jeff", "Available: 8AM-6PM | WED-SAT", R.drawable.emit));
+        staffList.add(new Staff("Nurse Jane Smith", "Available: 8AM-6PM | WED-SAT", R.drawable.logo));
+        staffList.add(new Staff("Dr. John Doe", "Available: 8AM-6PM | WED-SAT", R.drawable.logo));
+        staffList.add(new Staff("Nurse Jane Smith", "Available: 8AM-6PM | WED-SAT", R.drawable.logo));
+        staffList.add(new Staff("Dr. John Doe", "Available: 8AM-6PM | WED-SAT", R.drawable.logo));
+        staffList.add(new Staff("Nurse Jane Smith", "Available: 8AM-6PM | WED-SAT", R.drawable.logo));
 
         staffAdapter = new StaffAdapter(staffList);
         staffRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
