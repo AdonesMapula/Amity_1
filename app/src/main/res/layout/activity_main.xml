@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -62,20 +63,44 @@
     </LinearLayout>
 
 
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/constraintLayout2"-->
+<!--        android:layout_width="387dp"-->
+<!--        android:layout_height="284dp"-->
+<!--        android:layout_marginBottom="4dp"-->
+<!--        android:background="@drawable/rounded_bg_blue"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt">-->
+
+<!--        &lt;!&ndash; ViewPager2 for Graphs &ndash;&gt;-->
+
+<!--        <androidx.viewpager2.widget.ViewPager2-->
+<!--            android:id="@+id/viewPager"-->
+<!--            android:layout_width="345dp"-->
+<!--            android:layout_height="273dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.529"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="389dp"
-        android:layout_height="295dp"
-        android:background="@drawable/rounded_bg"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:layout_width="372dp"
+        android:layout_height="585dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/white_bg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt">
 
         <ScrollView
-            android:layout_width="333dp"
-            android:layout_height="285dp"
+            android:layout_width="358dp"
+            android:layout_height="575dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +121,7 @@
                     android:fontFamily="@font/geologicaregular"
                     android:hint="Patient's Name"
                     android:inputType="text"
+                    android:maxLength="30"
                     android:padding="10dp" />
 
                 <EditText
@@ -107,6 +133,7 @@
                     android:fontFamily="@font/geologicaregular"
                     android:hint="Patient's Address"
                     android:inputType="text"
+                    android:maxLength="30"
                     android:padding="10dp" />
 
                 <EditText
@@ -118,40 +145,183 @@
                     android:fontFamily="@font/geologicaregular"
                     android:hint="Patient's Phone Number"
                     android:inputType="text"
+                    android:maxLength="30"
                     android:padding="10dp" />
 
-                <EditText
-                    android:id="@+id/ptntsGender"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="16dp"
-                    android:ems="10"
-                    android:fontFamily="@font/geologicaregular"
-                    android:hint="Gender"
-                    android:inputType="text"
-                    android:padding="10dp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
 
-                <EditText
-                    android:id="@+id/ptntsStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="16dp"
-                    android:ems="10"
-                    android:fontFamily="@font/geologicaregular"
-                    android:hint="Marital Status"
-                    android:inputType="text"
-                    android:padding="10dp" />
+                    <Spinner
+                        android:id="@+id/ptntsGender"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/geologicaregular"
+                        android:padding="10dp"
+                        android:spinnerMode="dropdown" />
 
-                <EditText
-                    android:id="@+id/ptntsStatus2"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="16dp"
-                    android:ems="10"
+                    <Spinner
+                        android:id="@+id/ptntsStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/geologicaregular"
+                        android:padding="10dp"
+                        android:spinnerMode="dropdown" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/vitalSignsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vital signs"
                     android:fontFamily="@font/geologicaregular"
-                    android:hint="Vital signs"
-                    android:inputType="text"
-                    android:padding="10dp" />
+                    android:textSize="20sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/bloodPressureTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="Blood Pressure"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+
+                        <EditText
+                            android:id="@+id/pulseRateTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="Pulse Rate"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/respRateTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="Resp. Rate"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+
+                        <EditText
+                            android:id="@+id/weightTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="Weight"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/temperatureTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="Temperature"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+
+                        <EditText
+                            android:id="@+id/ccTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="CC"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/peTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="PE"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+
+                        <EditText
+                            android:id="@+id/dxTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="DX"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/medsTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="Meds"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+
+                        <EditText
+                            android:id="@+id/labsTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/geologicaregular"
+                            android:hint="Labs"
+                            android:inputType="text"
+                            android:maxLength="10"
+                            android:padding="10dp" />
+                    </TableRow>
+                </TableLayout>
 
                 <TextView
                     android:id="@+id/dateBirth"
@@ -161,10 +331,9 @@
                     android:background="@drawable/rounded_bg_blue"
                     android:fontFamily="@font/geologicaregular"
                     android:gravity="center"
-                    android:hint="Date of Birth"
                     android:padding="10dp"
+                    android:text="Date of Birth"
                     android:textColor="@color/white"
-                    android:textColorHint="#FFFFFF"
                     android:textSize="20sp" />
 
                 <TextView
@@ -175,10 +344,9 @@
                     android:background="@drawable/rounded_bg_blue"
                     android:fontFamily="@font/geologicaregular"
                     android:gravity="center"
-                    android:hint="Date of Check-up"
                     android:padding="10dp"
+                    android:text="Date of Check-up"
                     android:textColor="@color/white"
-                    android:textColorHint="#FFFFFF"
                     android:textSize="20sp" />
 
                 <Button
@@ -201,51 +369,28 @@
                     android:text="@string/add_patient"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
-
             </LinearLayout>
+
+
+
         </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="387dp"
-        android:layout_height="284dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/rounded_bg_blue"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt">
-
-        <!-- ViewPager2 for Graphs -->
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="345dp"
-            android:layout_height="273dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.529"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <TextView
         android:id="@+id/welcomeTxt"
-        android:layout_width="163dp"
-        android:layout_height="47dp"
+        android:layout_width="356dp"
+        android:layout_height="42dp"
         android:fontFamily="@font/geologicaregular"
-        android:text="@string/welcome"
-        android:textColor="@color/black"
+        android:text="add Patient to Records"
+        android:textColor="#0064F6"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        android:background="@drawable/white_bg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -15,24 +17,38 @@ import retrofit2.http.Part;
 
 public interface NetworkService {
 
-    // Register user
     @FormUrlEncoded
-    @POST("register.php")
-    Call<RegistrationResponseModel> register(@FieldMap HashMap<String, String> params);
+    @POST("send_otp.php")
+    Call<ResponseBody> sendOtp(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("verify_otp.php")
+    Call<ResponseBody> verifyOtp(
+            @Field("email") String email,
+            @Field("otp") String otp
+    ); // Adjusted to String as per usage
 
     // Login user
     @FormUrlEncoded
     @POST("login.php")
-    Call<LoginResponseModel> login(@Field("email") String email, @Field("password") String password);
+    Call<LoginResponseModel> login(
+            @Field("name") String name,
+            @Field("password") String password
+    );
 
     // Add patient to the database
     @FormUrlEncoded
     @POST("add_patient.php")
     Call<PatientResponseModel> addPatient(
-            @Field("name") String patientName,
-            @Field("address") String patientAddress,
-            @Field("phone") String patientPhone,
-            @Field("checkup_date") String checkupDate
+            @Field("name") String name,
+            @Field("address") String address,
+            @Field("phone") String phone,
+            @Field("birth_date") String birthDate,
+            @Field("checkup_date") String checkupDate,
+            @Field("gender") String gender,
+            @Field("status") String status
     );
 
     // Upload scanned document to the server

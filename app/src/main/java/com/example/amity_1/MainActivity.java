@@ -7,14 +7,17 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private NetworkService apiService;
     private String patientName, patientAddress, patientPhone, checkupDate, patientDOB, patientGender, patientStatus;
     private TextView dateCheckTxt, dateBirth;
+    private Spinner genderSpinner, statusSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize UI and Retrofit
         initializeUI();
         initializeRetrofit();
     }
@@ -57,12 +60,19 @@ public class MainActivity extends AppCompatActivity {
         Button addPatientButton = findViewById(R.id.addPatient);
         ImageButton fileButton = findViewById(R.id.fileBtn);
         ImageButton staffButton = findViewById(R.id.staffBtn);
-        ViewPager2 viewPager = findViewById(R.id.viewPager);
+        genderSpinner = findViewById(R.id.ptntsGender);
+        statusSpinner = findViewById(R.id.ptntsStatus);
 
-        // Set up ViewPager adapter for graphs
-        viewPager.setAdapter(new ViewPagerAdapter(this));
+        setupSpinner(genderSpinner, R.array.gender_options, selectedGender -> {
+            patientGender = selectedGender;
+            Log.d(TAG, "Selected gender: " + patientGender);
+        });
 
-        // Button click listeners
+        setupSpinner(statusSpinner, R.array.status_options, selectedStatus -> {
+            patientStatus = selectedStatus;
+            Log.d(TAG, "Selected status: " + patientStatus);
+        });
+
         addFilesButton.setOnClickListener(v -> launchCamera());
         addPatientButton.setOnClickListener(v -> addPatientToDatabase());
         fileButton.setOnClickListener(v -> openActivity(FileActivity.class));
@@ -77,6 +87,24 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = retrofit.create(NetworkService.class);
+    }
+
+    private void setupSpinner(Spinner spinner, int arrayResource, OnItemSelectedListener listener) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayResource, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                listener.onItemSelected(selectedItem);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                listener.onNothingSelected();
+            }
+        });
     }
 
     private void launchCamera() {
@@ -109,10 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<UploadResponseModel> call, Response<UploadResponseModel> response) {
                     String message = response.isSuccessful() ? "Document uploaded successfully" : "Failed to upload document: " + response.message();
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, message); // Log the response message
+                    Log.d(TAG, message);
 
                     if (response.isSuccessful()) {
-                        // After successful upload, upload the image to the Hostinger gallery
                         uploadToHostingerGallery(file);
                     }
                 }
@@ -133,11 +160,9 @@ public class MainActivity extends AppCompatActivity {
         // Define the URL to your Hostinger gallery
         String uploadUrl = "https://cornflowerblue-quetzal-932463.hostingersite.com/uploads/";
 
-        // Create a new RequestBody for the file
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        // Create a Retrofit interface method for uploading to Hostinger
         apiService.uploadToHostingerGallery(body).enqueue(new Callback<UploadResponseModel>() {
             @Override
             public void onResponse(Call<UploadResponseModel> call, Response<UploadResponseModel> response) {
@@ -158,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     private void addPatientToDatabase() {
         collectPatientData();
 
@@ -168,127 +192,87 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        apiService.addPatient(patientName, patientAddress, patientPhone, checkupDate).enqueue(new Callback<PatientResponseModel>() {
-            @Override
-            public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "Patient added successfully", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Patient added successfully: " + response.body());
-                    showImageChoiceDialog();
-                } else {
-                    Toast.makeText(MainActivity.this, "Failed to add patient: " + response.message(), Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Failed to add patient: " + response.message());
-                }
-            }
+        apiService.addPatient(patientName, patientAddress, patientPhone, patientDOB, checkupDate, patientGender, patientStatus)
+                .enqueue(new Callback<PatientResponseModel>() {
+                    @Override
+                    public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "Patient added successfully", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Patient added successfully: " + response.body());
+                            showImageChoiceDialog();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Failed to add patient: " + response.message(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Failed to add patient: " + response.message());
+                        }
+                    }
 
-            @Override
-            public void onFailure(Call<PatientResponseModel> call, Throwable t) {
-                Log.e(TAG, "Failed to add patient", t);
-                Toast.makeText(MainActivity.this, "Failed to add patient: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<PatientResponseModel> call, Throwable t) {
+                        Log.e(TAG, "Failed to add patient", t);
+                        Toast.makeText(MainActivity.this, "Failed to add patient: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
-
     private void collectPatientData() {
-        patientName = getTextFromEditText(R.id.ptntsNameTxt);
-        patientAddress = getTextFromEditText(R.id.ptntsAddressTxt);
-        patientPhone = getTextFromEditText(R.id.ptntsPhoneTxt);
-        checkupDate = dateCheckTxt.getText().toString().trim();
-
-        Log.d(TAG, "Collected data: Name = " + patientName + ", Address = " + patientAddress + ", Phone = " + patientPhone + ", Checkup Date = " + checkupDate);
+        patientName = ((EditText) findViewById(R.id.ptntsNameTxt)).getText().toString().trim();
+        patientAddress = ((EditText) findViewById(R.id.ptntsAddressTxt)).getText().toString().trim();
+        patientPhone = ((EditText) findViewById(R.id.ptntsPhoneTxt)).getText().toString().trim();
+        patientDOB = dateBirth.getText().toString();
+        checkupDate = dateCheckTxt.getText().toString();
     }
 
     private boolean isPatientDataValid() {
-        return !patientName.isEmpty() && !patientAddress.isEmpty() && !patientPhone.isEmpty() && !checkupDate.isEmpty();
+        return !patientName.isEmpty() && !patientAddress.isEmpty() && !patientPhone.isEmpty() && !patientDOB.isEmpty() && !checkupDate.isEmpty();
     }
-
-    private String getTextFromEditText(int editTextId) {
-        return ((EditText) findViewById(editTextId)).getText().toString().trim();
-    }
-
-    private void showImageChoiceDialog() {
-        String[] options = {"Open Camera", "Select from Gallery", "Exit"};
-        new AlertDialog.Builder(this)
-                .setTitle("Choose Image Source")
-                .setItems(options, (dialog, which) -> handleImageChoice(which))
-                .show();
-    }
-
-    private void handleImageChoice(int which) {
-        switch (which) {
-            case 0:
-                launchCamera();
-                break;
-            case 1:
-                openGallery();
-                break;
-            case 2:
-                // Exit
-                break;
-        }
-    }
-
-    private void openGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, REQUEST_IMAGE_CAPTURE);
-    }
-
-    private void showDatePickerDialog() {
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        // Create the DatePickerDialog with custom theme
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                R.style.CustomDatePickerTheme, // Apply your custom theme here
-                (view, selectedYear, selectedMonth, selectedDay) -> {
-                    checkupDate = "Date of Check-up: "+selectedYear + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + String.format("%02d", selectedDay); // Format date as YYYY-MM-DD
-                    dateCheckTxt.setText(checkupDate);
-                    Log.d(TAG, "Selected date: " + checkupDate); // Log the selected date
-                },
-                year, month, day
-        );// Show the dialog
-        datePickerDialog.show();
-    }
-    private void showDatePickerDialog1() {
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog2 = new DatePickerDialog(
-                this,
-                R.style.CustomDatePickerTheme, // Apply your custom theme here
-                (view, selectedYear, selectedMonth, selectedDay) -> {
-                    patientDOB = "Date of Birth: "+selectedYear + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + String.format("%02d", selectedDay); // Format date as YYYY-MM-DD
-                    dateBirth.setText(patientDOB);
-                    Log.d(TAG, "Selected date: " + patientDOB); // Log the selected date
-                },
-                year, month, day
-        );
-
-        datePickerDialog2.show();
-
-
-    }
-
 
     private File convertBitmapToFile(Bitmap bitmap) {
-        File file = new File(getCacheDir(), "image.png");
-        try (FileOutputStream fos = new FileOutputStream(file)) {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            Log.d(TAG, "Bitmap converted to file: " + file.getAbsolutePath()); // Log the file path
+        File file = new File(getCacheDir(), "patient_image.jpg");
+        try (FileOutputStream out = new FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             return file;
         } catch (IOException e) {
-            Log.e(TAG, "Failed to convert bitmap to file", e);
+            Log.e(TAG, "Error saving bitmap to file", e);
             return null;
         }
     }
 
-    private void openActivity(Class<?> activityClass) {
-        startActivity(new Intent(this, activityClass));
+    private void showImageChoiceDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Choose an image option")
+                .setItems(new String[]{"Upload Image", "Take Photo"}, (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            // Implement upload image logic
+                            break;
+                        case 1:
+                            launchCamera();
+                            break;
+                    }
+                })
+                .show();
+    }
+
+    private void openActivity(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
+    }
+
+    private void showDatePickerDialog() {
+        showDatePickerDialog((listener, year, month, dayOfMonth) -> dateCheckTxt.setText(dayOfMonth + "/" + (month + 1) + "/" + year));
+    }
+
+    private void showDatePickerDialog1() {
+        showDatePickerDialog((listener, year, month, dayOfMonth) -> dateBirth.setText(dayOfMonth + "/" + (month + 1) + "/" + year));
+    }
+
+    private void showDatePickerDialog(DatePickerDialog.OnDateSetListener listener) {
+        Calendar calendar = Calendar.getInstance();
+        new DatePickerDialog(this, listener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    interface OnItemSelectedListener {
+        void onItemSelected(String item);
+        default void onNothingSelected() {}
     }
 }

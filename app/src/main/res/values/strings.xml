@@ -1,4 +1,33 @@
 <resources>
+    <string-array name="gender_options">
+        <item>Gender:</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Rather not say</item>
+        <item>Non-Binary</item>
+        <item>Genderqueer</item>
+        <item>Genderfluid</item>
+        <item>Agender</item>
+        <item>Bigender</item>
+        <item>Two-Spirit</item>
+        <item>Gay</item>
+        <item>Lesbian</item>
+        <item>Dragon</item>
+        <item>Demiboy</item>
+        <item>Demigirl</item>
+        <item>Pangender</item>
+        <item>Transgender</item>
+        <item>Cisgender</item>
+        <item>Dinosaur</item>
+    </string-array>
+    <string-array name="status_options">
+        <item>Status:</item>
+        <item>Single</item>
+        <item>Married</item>
+        <item>Divorced</item>
+        <item>Widowed</item>
+        <item>Other</item>
+    </string-array>
     <string name="Back">Go back</string>
     <string name="app_name">AmityMC</string>
     <string name="AmityMC">AmityMc\n</string>
@@ -16,5 +45,9 @@
     <string name="address">Address</string>
     <string name="phone_number">Phone Number</string>
     <string name="patient_name">Patient Name</string>
+    <string name="title_activity_otp_phone">otpPhone</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="LogoLogIn">LogoLogIn</string>
 
 </resources>

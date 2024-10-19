@@ -27,6 +27,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -39,7 +42,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0' // Gson converter for Retrofit
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3' // OkHttp logging interceptor
     implementation 'com.squareup.okhttp3:okhttp:4.9.0' // OkHttp library
-    implementation 'com.jjoe64:graphview:4.2.2' // GraphView library for graph plotting
+    implementation 'com.jjoe64:graphview:4.2.2'
+    implementation libs.lifecycle.livedata.ktx
+    implementation libs.lifecycle.viewmodel.ktx// GraphView library for graph plotting
 
     // Testing dependencies
     testImplementation 'junit:junit:4.13.2' // JUnit for unit tests

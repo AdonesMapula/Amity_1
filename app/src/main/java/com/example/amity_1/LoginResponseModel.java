@@ -10,7 +10,7 @@ public class LoginResponseModel {
     @SerializedName("message")
     private String message;
 
-    @SerializedName("user_details")
+    @SerializedName("userDetailObject")
     private UserDetailModel userDetailObject;
 
     public UserDetailModel getUserDetailObject() {

@@ -5,10 +5,18 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class UserDetailModel {
-    @SerializedName("user_details")
-    private List<UserModel> userDetails;
 
-    public List<UserModel> getUserDetails() {
-        return userDetails;
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("password")
+    private String password;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

@@ -3,24 +3,14 @@ package com.example.amity_1;
 import com.google.gson.annotations.SerializedName;
 
 public class UserModel {
-    @SerializedName("first_name")
-    private String firstName;
+    @SerializedName("name")
+    private String name;
 
-    @SerializedName("last_name")
-    private String lastName;
+    @SerializedName("password")
+    private String password;
 
-    @SerializedName("email")
-    private String email;
-
-    public String getFirstName() {
-        return firstName;
+    public String getName() { return name; }
+    public String getPassword() {
+        return password;
     }
-
-    public String getLastName() {
-        return lastName;
     }
-
-    public String getEmail() {
-        return email;
-    }
-}
