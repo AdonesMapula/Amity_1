@@ -25,9 +25,10 @@ import retrofit2.Response;
 
 public class otpPhone extends AppCompatActivity {
 
-    private EditText otpEmailInput;
+    private EditText otpPhoneInput;
     private Button btnConfirmOtp;
-    private ImageButton backButton;  // Add the back button
+    private ImageButton backButton;
+    private Button emailButton;  // Email OTP button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +44,16 @@ public class otpPhone extends AppCompatActivity {
         });
 
         // Find views by ID
-        otpEmailInput = findViewById(R.id.otpEmailInput);
+        otpPhoneInput = findViewById(R.id.otpInput);
         btnConfirmOtp = findViewById(R.id.btnConfirmOtp);
-        backButton = findViewById(R.id.backButton);  // Get reference to back button
+        backButton = findViewById(R.id.backButton);
+        emailButton = findViewById(R.id.otpEmailBtn);  // Email OTP button
 
         // Set click listener for Send button
         btnConfirmOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = otpEmailInput.getText().toString().trim();
+                String email = otpPhoneInput.getText().toString().trim();
                 if (!email.isEmpty()) {
                     sendOtpToEmail(email);  // Call method to send OTP
                 } else {
@@ -60,7 +62,7 @@ public class otpPhone extends AppCompatActivity {
             }
         });
 
-        // Set click listener for back button
+        // Set click listener for Back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +70,16 @@ public class otpPhone extends AppCompatActivity {
                 Intent intent = new Intent(otpPhone.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        // Set click listener for Email OTP button to redirect to OtpActivity
+        emailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start OtpActivity
+                Intent intent = new Intent(otpPhone.this, OtpActivity.class);
+                startActivity(intent);
             }
         });
     }

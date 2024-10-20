@@ -6,8 +6,8 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,58 +16,46 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Amity_1"
-        android:windowSoftInputMode="adjustResize"> <!-- Adjust Keyboard Layout -->
-
+        android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name=".otpVerificationActivity"
+            android:exported="false" />
+        <!-- Adjust Keyboard Layout -->
         <!-- OTP Phone Activity -->
         <activity
             android:name=".otpPhone"
             android:exported="false"
             android:label="@string/title_activity_otp_phone"
-            android:theme="@style/Theme.Amity_1.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- OTP Activity -->
+            android:theme="@style/Theme.Amity_1.NoActionBar" /> <!-- OTP Activity -->
         <activity
             android:name=".OtpActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- Monthly Graph Fragment -->
+            android:exported="false" /> <!-- Monthly Graph Fragment -->
         <activity
             android:name=".MonthlyGraphFragment"
-            android:exported="false" />
-
-        <!-- Login Activity (Main Launcher) -->
+            android:exported="false" /> <!-- Login Activity (Main Launcher) -->
         <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Main Activity -->
+        </activity> <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- File Activity -->
+            android:windowSoftInputMode="adjustResize" /> <!-- File Activity -->
         <activity
             android:name=".FileActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- Staff Activity -->
+            android:windowSoftInputMode="adjustResize" /> <!-- Staff Activity -->
         <activity
             android:name=".StaffActivity"
-            android:exported="true" />
-
-        <!-- Patient File Activity -->
+            android:exported="true" /> <!-- Patient File Activity -->
         <activity
             android:name=".PatientFileActivity"
             android:exported="true" />
-
     </application>
+
 </manifest>

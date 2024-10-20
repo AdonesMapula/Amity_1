@@ -17,10 +17,10 @@
         android:padding="5dp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.6"
         app:srcCompat="@drawable/back" />
 
     <LinearLayout
@@ -55,11 +55,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#0064F6"
+            android:backgroundTint="#DAE6FD"
             android:enabled="true"
             android:fontFamily="@font/geologicaregular"
             android:text="Phone"
-            android:textColor="#ffffff"
+            android:textColor="#0064F6"
             android:textSize="16sp"
             android:textStyle="bold"
             app:icon="@android:drawable/stat_sys_phone_call" />
@@ -98,7 +98,7 @@
         android:id="@+id/btnConfirmOtp"
         android:layout_width="262dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="380dp"
+        android:layout_marginBottom="376dp"
         android:backgroundTint="#0064F7"
         android:fontFamily="@font/geologicaregular"
         android:text="Send"
@@ -107,24 +107,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/otpEmailInput"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/otpEmailInput"
+        android:id="@+id/otpInput"
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="19dp"
         android:background="@drawable/rounded_bg"
         android:hint="Enter Phone Number"
-        android:inputType="textEmailAddress"
+        android:inputType="phone"
         android:maxLength="30"
         android:paddingStart="16dp"
         android:textColorHint="#9C9C9C"
         android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnConfirmOtp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

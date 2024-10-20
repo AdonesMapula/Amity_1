@@ -22,13 +22,15 @@ public interface NetworkService {
     Call<ResponseBody> sendOtp(
             @Field("email") String email
     );
+    @POST("send_otp_phone.php")
+    Call<ResponseBody> sendOtpToPhone(@Body String phone);
 
     @FormUrlEncoded
     @POST("verify_otp.php")
     Call<ResponseBody> verifyOtp(
             @Field("email") String email,
             @Field("otp") String otp
-    ); // Adjusted to String as per usage
+    );
 
     // Login user
     @FormUrlEncoded
@@ -39,17 +41,28 @@ public interface NetworkService {
     );
 
     // Add patient to the database
-    @FormUrlEncoded
     @POST("add_patient.php")
+    @FormUrlEncoded
     Call<PatientResponseModel> addPatient(
             @Field("name") String name,
             @Field("address") String address,
             @Field("phone") String phone,
-            @Field("birth_date") String birthDate,
-            @Field("checkup_date") String checkupDate,
             @Field("gender") String gender,
-            @Field("status") String status
+            @Field("status") String status,
+            @Field("birthday") String birthDate, // Field name changed to match PHP script
+            @Field("checkup_date") String checkupDate,
+            @Field("blood_pressure") String bloodPressure,
+            @Field("pulse_rate") String pulseRate,
+            @Field("resp_rate") String respRate,
+            @Field("weight") String weight,
+            @Field("temperature") String temperature,
+            @Field("cc") String cc,
+            @Field("pe") String pe,
+            @Field("dx") String dx,
+            @Field("meds") String meds,
+            @Field("labs") String labs
     );
+
 
     // Upload scanned document to the server
     @Multipart

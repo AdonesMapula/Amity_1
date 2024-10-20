@@ -15,52 +15,43 @@
         android:background="@drawable/rounded_bg_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.358">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="352dp"
-            android:layout_height="487dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_bg"
-            android:padding="16dp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/geologicaregular"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintVertical_bias="0.403">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
-            android:layout_width="345dp"
+            android:layout_width="match_parent"
             android:layout_height="47dp"
             android:layout_margin="16dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_bg"
             android:foregroundTint="#0057FF"
             android:queryHint="Search patients"
-            app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-            app:layout_constraintHorizontal_bias="0.52"
-            app:layout_constraintStart_toStartOf="@+id/recyclerView"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="338dp"
+            android:layout_height="480dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_bg"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:layout_width="391dp"
+        android:layout_width="match_parent"
         android:layout_height="86dp"
         android:background="#DCE8FF"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
             android:id="@+id/homeBtn"
@@ -71,10 +62,9 @@
             android:alpha="0.5"
             android:background="@android:color/transparent"
             android:contentDescription="@string/home"
-            android:enabled="true"
+            android:enabled="false"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/home"
-            tools:ignore="ImageContrastCheck" />
+            app:srcCompat="@drawable/home" />
 
         <ImageButton
             android:id="@+id/fileBtn"
@@ -85,7 +75,7 @@
             android:background="@android:color/transparent"
             android:baselineAlignBottom="true"
             android:contentDescription="@string/file"
-            android:enabled="false"
+            android:enabled="true"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/file"
             tools:ignore="ImageContrastCheck" />
@@ -103,27 +93,24 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_launcher_foreground"
             tools:ignore="ImageContrastCheck" />
-
     </LinearLayout>
 
     <TextView
         android:id="@+id/welcomeTxt"
-        android:layout_width="208dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="13dp"
         android:text="Patient's Records"
-        android:textColor="@color/black"
+        android:fontFamily="@font/geologicaregular"
+        android:textColor="#0064F6"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:fontFamily="@font/geologicaregular"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.133"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
-    <!-- SearchView for searching patients -->
-
-    <!-- RecyclerView for displaying the list of patients -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

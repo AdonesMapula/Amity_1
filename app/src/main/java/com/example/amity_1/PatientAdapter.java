@@ -79,22 +79,16 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
     static class PatientViewHolder extends RecyclerView.ViewHolder {
         TextView patientNameTextView;
-        TextView patientPhoneTextView;
-        TextView patientAddressTextView;
         TextView checkupDateTextView;
 
         public PatientViewHolder(@NonNull View itemView) {
             super(itemView);
             patientNameTextView = itemView.findViewById(R.id.patientNameTextView);
-            patientPhoneTextView = itemView.findViewById(R.id.patientPhoneTextView);
-            patientAddressTextView = itemView.findViewById(R.id.patientAddressTextView);
             checkupDateTextView = itemView.findViewById(R.id.checkupDateTextView);
         }
 
         public void bind(Patient patient) {
             patientNameTextView.setText(patient.getName());
-            patientPhoneTextView.setText(patient.getPhoneNumber());
-            patientAddressTextView.setText(patient.getAddress());
             checkupDateTextView.setText(patient.getCheckupDate());
         }
     }

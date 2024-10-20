@@ -144,8 +144,8 @@
                     android:ems="10"
                     android:fontFamily="@font/geologicaregular"
                     android:hint="Patient's Phone Number"
-                    android:inputType="text"
-                    android:maxLength="30"
+                    android:inputType="phone|number"
+                    android:maxLength="13"
                     android:padding="10dp" />
 
                 <LinearLayout
@@ -382,12 +382,12 @@
         android:id="@+id/welcomeTxt"
         android:layout_width="356dp"
         android:layout_height="42dp"
+        android:background="@drawable/white_bg"
         android:fontFamily="@font/geologicaregular"
         android:text="add Patient to Records"
         android:textColor="#0064F6"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
-        android:background="@drawable/white_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
