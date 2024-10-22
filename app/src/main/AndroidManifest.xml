@@ -45,7 +45,7 @@
         </activity> <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize" /> <!-- File Activity -->
+            android:windowSoftInputMode="adjustPan" /> <!-- File Activity -->
         <activity
             android:name=".FileActivity"
             android:exported="true"

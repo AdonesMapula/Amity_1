@@ -89,28 +89,30 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="372dp"
-        android:layout_height="585dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="385dp"
+        android:layout_height="625dp"
         android:background="@drawable/white_bg"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeTxt">
 
         <ScrollView
-            android:layout_width="358dp"
-            android:layout_height="575dp"
+            android:layout_width="375dp"
+            android:layout_height="600dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="370dp"
+                android:layout_height="650dp"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="8dp"
+                android:paddingTop="0dp">
 
                 <EditText
                     android:id="@+id/ptntsNameTxt"
@@ -122,7 +124,8 @@
                     android:hint="Patient's Name"
                     android:inputType="text"
                     android:maxLength="30"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:textColorHint="#757575" />
 
                 <EditText
                     android:id="@+id/ptntsAddressTxt"
@@ -134,7 +137,8 @@
                     android:hint="Patient's Address"
                     android:inputType="text"
                     android:maxLength="30"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:textColorHint="#757575" />
 
                 <EditText
                     android:id="@+id/ptntsPhoneTxt"
@@ -146,13 +150,14 @@
                     android:hint="Patient's Phone Number"
                     android:inputType="phone|number"
                     android:maxLength="13"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:textColorHint="#757575" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal">
 
                     <Spinner
                         android:id="@+id/ptntsGender"
@@ -177,10 +182,12 @@
                     android:id="@+id/vitalSignsLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vital signs"
+                    android:layout_marginBottom="8dp"
                     android:fontFamily="@font/geologicaregular"
+                    android:text="@string/vital_signs"
+                    android:textColor="#0064F6"
                     android:textSize="20sp"
-                    android:layout_marginBottom="8dp" />
+                    android:textStyle="bold" />
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -196,11 +203,13 @@
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_weight="1"
+                            android:autofillHints=""
                             android:fontFamily="@font/geologicaregular"
-                            android:hint="Blood Pressure"
+                            android:hint="@string/blood_pressure"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
 
                         <EditText
                             android:id="@+id/pulseRateTxt"
@@ -211,7 +220,8 @@
                             android:hint="Pulse Rate"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
                     </TableRow>
 
                     <TableRow
@@ -227,7 +237,8 @@
                             android:hint="Resp. Rate"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
 
                         <EditText
                             android:id="@+id/weightTxt"
@@ -238,7 +249,8 @@
                             android:hint="Weight"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
                     </TableRow>
 
                     <TableRow
@@ -254,7 +266,8 @@
                             android:hint="Temperature"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
 
                         <EditText
                             android:id="@+id/ccTxt"
@@ -265,7 +278,8 @@
                             android:hint="CC"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
                     </TableRow>
 
                     <TableRow
@@ -281,7 +295,8 @@
                             android:hint="PE"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
 
                         <EditText
                             android:id="@+id/dxTxt"
@@ -292,7 +307,8 @@
                             android:hint="DX"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
                     </TableRow>
 
                     <TableRow
@@ -308,7 +324,8 @@
                             android:hint="Meds"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
 
                         <EditText
                             android:id="@+id/labsTxt"
@@ -319,7 +336,8 @@
                             android:hint="Labs"
                             android:inputType="text"
                             android:maxLength="10"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:textColorHint="#757575" />
                     </TableRow>
                 </TableLayout>
 
@@ -356,9 +374,9 @@
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="#0064F7"
                     android:fontFamily="@font/geologicaregular"
-                    android:text="Upload files"
+                    android:text="@string/upload_files"
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/addPatient"
@@ -368,9 +386,8 @@
                     android:fontFamily="@font/geologicaregular"
                     android:text="@string/add_patient"
                     android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
-
 
 
         </ScrollView>
@@ -384,10 +401,12 @@
         android:layout_height="42dp"
         android:background="@drawable/white_bg"
         android:fontFamily="@font/geologicaregular"
+        android:gravity="bottom|center"
         android:text="add Patient to Records"
         android:textColor="#0064F6"
         android:textSize="25sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"

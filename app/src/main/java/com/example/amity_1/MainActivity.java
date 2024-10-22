@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private NetworkService apiService;
-    private String patientName, patientAddress, patientPhone, checkupDate, patientDOB, patientGender, patientStatus;
-    private String bloodPressure, pulseRate, respRate, weight, temperature, cc, pe, dx, meds, labs;
+    private String name, address, phone, checkup_date, birthday, gender, status;
+    private String blood_pressure, pulse_rate, resp_rate, weight, temperature, cc, pe, dx, meds, labs;
     private TextView dateCheckTxt, dateBirth;
     private Spinner genderSpinner, statusSpinner;
     private Uri imageUri;
@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSpinners() {
-        setupSpinner(genderSpinner, R.array.gender_options, selected -> patientGender = selected);
-        setupSpinner(statusSpinner, R.array.status_options, selected -> patientStatus = selected);
+        setupSpinner(genderSpinner, R.array.gender_options, selected -> gender = selected);
+        setupSpinner(statusSpinner, R.array.status_options, selected -> status = selected);
     }
 
     private void setupButtons() {
@@ -177,14 +177,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void collectPatientData() {
-        patientName = getTextFromEditText(R.id.ptntsNameTxt);
-        patientAddress = getTextFromEditText(R.id.ptntsAddressTxt);
-        patientPhone = getTextFromEditText(R.id.ptntsPhoneTxt);
-        patientDOB = dateBirth.getText().toString();
-        checkupDate = dateCheckTxt.getText().toString();
-        bloodPressure = getTextFromEditText(R.id.bloodPressureTxt);
-        pulseRate = getTextFromEditText(R.id.pulseRateTxt);
-        respRate = getTextFromEditText(R.id.respRateTxt);
+        name = getTextFromEditText(R.id.ptntsNameTxt);
+        address = getTextFromEditText(R.id.ptntsAddressTxt);
+        phone = getTextFromEditText(R.id.ptntsPhoneTxt);
+        birthday = dateBirth.getText().toString(); // Changed to match with API
+        checkup_date = dateCheckTxt.getText().toString(); // Changed to match with API
+        blood_pressure = getTextFromEditText(R.id.bloodPressureTxt); // Changed to match with API
+        pulse_rate = getTextFromEditText(R.id.pulseRateTxt); // Changed to match with API
+        resp_rate = getTextFromEditText(R.id.respRateTxt); // Changed to match with API
         weight = getTextFromEditText(R.id.weightTxt);
         temperature = getTextFromEditText(R.id.temperatureTxt);
         cc = getTextFromEditText(R.id.ccTxt);
@@ -199,8 +199,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addPatientToDatabase() {
-        apiService.addPatient(patientName, patientAddress, patientPhone, patientGender, patientStatus,patientDOB,
-                        bloodPressure, pulseRate, respRate, weight, temperature, cc, pe, dx, meds, labs, checkupDate)
+        apiService.addPatient(name, address, phone, gender, status, birthday, checkup_date,
+                        blood_pressure, pulse_rate, resp_rate, weight, temperature, cc, pe, dx, meds, labs)
                 .enqueue(new Callback<PatientResponseModel>() {
                     @Override
                     public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isPatientDataValid() {
-        return !patientName.isEmpty() && !patientAddress.isEmpty() && !patientPhone.isEmpty() && !patientDOB.isEmpty() && !checkupDate.isEmpty();
+        return !name.isEmpty() && !address.isEmpty() && !phone.isEmpty() && !birthday.isEmpty() && !checkup_date.isEmpty();
     }
 
     private File convertBitmapToFile(Bitmap bitmap) {
@@ -232,18 +232,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void showDatePickerDialog(TextView textView) {
         Calendar calendar = Calendar.getInstance();
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-            String formattedDate = String.format("%02d/%02d/%d", dayOfMonth, month + 1, year);
-            textView.setText(formattedDate);
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, year, month, dayOfMonth) -> textView.setText(String.format("%d-%02d-%02d", year, month + 1, dayOfMonth)),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 
-
-    private void openActivity(Class<?> cls) {
-        startActivity(new Intent(MainActivity.this, cls));
+    private void openActivity(Class<?> activityClass) {
+        startActivity(new Intent(this, activityClass));
     }
 
-    private interface OnItemSelectedListener {
+    interface OnItemSelectedListener {
         void onItemSelected(String selected);
     }
 }

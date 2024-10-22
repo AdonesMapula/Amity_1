@@ -11,27 +11,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/patientNameTextView"
-            android:layout_width="15sp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/geologicaregular"
+            android:gravity="left|center"
             android:text="Patient Name"
-            android:textColor="@color/black"
+            android:textColor="#0064F6"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/checkupDateTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:fontFamily="@font/geologicaregular"
+            android:gravity="center"
             android:text="Last Checkup Date"
-            android:textColor="@color/black"
+            android:textColor="#0064F6"
             android:textSize="16sp" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -49,7 +49,7 @@ public interface NetworkService {
             @Field("phone") String phone,
             @Field("gender") String gender,
             @Field("status") String status,
-            @Field("birthday") String birthDate, // Field name changed to match PHP script
+            @Field("birthday") String birthday,
             @Field("checkup_date") String checkupDate,
             @Field("blood_pressure") String bloodPressure,
             @Field("pulse_rate") String pulseRate,

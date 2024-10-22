@@ -10,8 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="370dp"
-        android:layout_height="575dp"
+        android:layout_width="375dp"
+        android:layout_height="600dp"
         android:background="@drawable/rounded_bg_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,18 +22,20 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="47dp"
             android:layout_margin="16dp"
             android:background="@drawable/rounded_bg"
             android:foregroundTint="#0057FF"
             android:queryHint="Search patients"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="338dp"
-            android:layout_height="480dp"
+            android:layout_width="350dp"
+            android:layout_height="515dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_bg"
@@ -101,8 +103,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="13dp"
-        android:text="Patient's Records"
         android:fontFamily="@font/geologicaregular"
+        android:text="Patient's Records"
         android:textColor="#0064F6"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -111,6 +113,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.625" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
