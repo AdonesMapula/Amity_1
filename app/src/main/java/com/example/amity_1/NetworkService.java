@@ -1,29 +1,31 @@
 package com.example.amity_1;
 
-import java.util.HashMap;
-
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface NetworkService {
+    @GET("patients.php")
+    Call<PatientResponseModel> getPatients();
+
+    @GET("patients.php")
+    Call<PatientResponseModel> searchPatients(@Query("query") String query);
 
     @FormUrlEncoded
-    @POST("resend_otp.php")  // Adjust based on your actual endpoint
+    @POST("resend_otp.php")
     Call<ResponseBody> resendOtp(
             @Field("email_or_phone") String emailOrPhone
     );
     @FormUrlEncoded
-    @POST("reset_password.php") // Replace with your actual endpoint
+    @POST("reset_password.php")
     Call<ResponseBody> resetPassword(
             @Field("email") String email,
             @Field("new_password") String newPassword
@@ -46,7 +48,7 @@ public interface NetworkService {
             @Field("password") String password
     );
     @FormUrlEncoded
-    @POST("add_patient.php") // Make sure this matches your PHP file
+    @POST("add_patient.php")
     Call<PatientResponseModel> addPatient(
             @Field("name") String name,
             @Field("address") String address,
@@ -75,9 +77,6 @@ public interface NetworkService {
     @Multipart
     @POST("upload.php")
     Call<UploadResponseModel> uploadToHostingerGallery(@Part MultipartBody.Part file);
-
-    @GET("get_patients.php")
-    Call<PatientResponseModel> getPatients(); // Change the response model
 
     @GET("fetch_monthly_data.php")
     Call<GraphDataResponseModel> getMonthlyGraphData();

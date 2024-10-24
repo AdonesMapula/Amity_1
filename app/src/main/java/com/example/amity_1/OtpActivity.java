@@ -27,22 +27,19 @@ public class OtpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
 
-        // Find views by ID
         otpInput = findViewById(R.id.otpInput);
         btnConfirmOtp = findViewById(R.id.btnConfirmOtp);
         backButton = findViewById(R.id.backButton);
 
-        // Set click listener for Send OTP button
         btnConfirmOtp.setOnClickListener(v -> {
             String email = otpInput.getText().toString().trim();
             if (!email.isEmpty() && isValidEmail(email)) {
-                sendOtpToEmail(email);  // Send OTP to email
+                sendOtpToEmail(email);
             } else {
                 Toast.makeText(OtpActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Set click listener for Back button
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(OtpActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -50,15 +47,13 @@ public class OtpActivity extends AppCompatActivity {
         });
     }
 
-    // Helper method to validate email format
     private boolean isValidEmail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    // Method to send OTP to email
     private void sendOtpToEmail(String email) {
         NetworkService apiService = NetworkClient.getClient().create(NetworkService.class);
-        Call<ResponseBody> call = apiService.sendOtp(email);  // Call the PHP email OTP endpoint
+        Call<ResponseBody> call = apiService.sendOtp(email);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -68,11 +63,10 @@ public class OtpActivity extends AppCompatActivity {
                         String responseString = response.body().string();
                         JSONObject jsonResponse = new JSONObject(responseString);
                         if (jsonResponse.getString("status").equals("success")) {
-                            Toast.makeText(OtpActivity.this, "OTP sent to your email, please check", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OtpActivity.this, "OTP sent to your email, please check your inbox.", Toast.LENGTH_SHORT).show();
 
-                            // Redirect to OtpVerificationActivity
                             Intent intent = new Intent(OtpActivity.this, OtpVerificationActivity.class);
-                            intent.putExtra("email", email);  // Pass email to the next activity
+                            intent.putExtra("email", email);
                             startActivity(intent);
                         } else {
                             Toast.makeText(OtpActivity.this, jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();

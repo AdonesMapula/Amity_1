@@ -56,27 +56,23 @@ public class FileActivity extends AppCompatActivity {
         call.enqueue(new Callback<PatientResponseModel>() {
             @Override
             public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
-                handleFetchPatientsResponse(response);
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Patient> patients = response.body().getData();
+                    if (patients.isEmpty()) {
+                        showError("No patients found");
+                    } else {
+                        updatePatientList(patients);
+                    }
+                } else {
+                    showError("Failed to fetch patients: " + response.message());
+                }
             }
 
             @Override
             public void onFailure(Call<PatientResponseModel> call, Throwable t) {
-                showError(t.getMessage());
+                showError("Network Error: " + t.getMessage());
             }
         });
-    }
-
-    private void handleFetchPatientsResponse(Response<PatientResponseModel> response) {
-        if (response.isSuccessful() && response.body() != null) {
-            List<Patient> patients = response.body().getData();
-            if (patients.isEmpty()) {
-                Toast.makeText(this, "No patients found", Toast.LENGTH_SHORT).show();
-            } else {
-                updatePatientList(patients);
-            }
-        } else {
-            Toast.makeText(this, "Failed to fetch patients: " + response.message(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void updatePatientList(List<Patient> patients) {
@@ -85,36 +81,57 @@ public class FileActivity extends AppCompatActivity {
         patientAdapter.notifyDataSetChanged();
     }
 
-    private void showError(String message) {
-        Toast.makeText(this, "Network Error: " + message, Toast.LENGTH_SHORT).show();
-    }
-
     private void setupSearchView() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                fetchSearchedPatients(query);
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                patientAdapter.getFilter().filter(newText);
+                fetchSearchedPatients(newText);
                 return true;
+            }
+        });
+
+        searchView.setOnClickListener(v -> searchView.setIconified(false));
+    }
+
+    private void fetchSearchedPatients(String query) {
+        NetworkService apiService = NetworkClient.getClient().create(NetworkService.class);
+        Call<PatientResponseModel> call = apiService.searchPatients(query);
+
+        call.enqueue(new Callback<PatientResponseModel>() {
+            @Override
+            public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    updatePatientList(response.body().getData());
+                } else {
+                    showError("Search failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PatientResponseModel> call, Throwable t) {
+                showError("Network Error: " + t.getMessage());
             }
         });
     }
 
     private void setButtonListeners() {
-        homeBtn.setOnClickListener(v -> openHomeActivity());
+        homeBtn.setOnClickListener(v -> openActivity(MainActivity.class));
         fileBtn.setOnClickListener(v -> Toast.makeText(this, "Already in File Activity", Toast.LENGTH_SHORT).show());
-        staffBtn.setOnClickListener(v -> openStaffActivity());
+        staffBtn.setOnClickListener(v -> openActivity(StaffActivity.class));
     }
 
-    private void openHomeActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+    private void openActivity(Class<?> activityClass) {
+        Intent intent = new Intent(this, activityClass);
+        startActivity(intent);
     }
 
-    private void openStaffActivity() {
-        startActivity(new Intent(this, StaffActivity.class));
+    private void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

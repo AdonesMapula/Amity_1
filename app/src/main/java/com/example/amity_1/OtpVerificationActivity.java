@@ -20,24 +20,21 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
     private EditText otpInput;
     private Button btnConfirmOtp;
-    private Button btnBackOtp; // Declare the resend button
+    private Button btnBackOtp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_otp_verification); // Ensure the correct layout file is set
+        setContentView(R.layout.activity_otp_verification);
 
-        // Find views by ID
         otpInput = findViewById(R.id.otpInputField);
         btnConfirmOtp = findViewById(R.id.btnVerifyOtp);
-        btnBackOtp = findViewById(R.id.btnBackOtp); // Initialize the resend button
-        TextView emailTextView = findViewById(R.id.emailTextView); // Initialize the email TextView
+        btnBackOtp = findViewById(R.id.btnBackOtp);
+        TextView emailTextView = findViewById(R.id.emailTextView);
 
-        // Get the email passed from the previous activity
         String email = getIntent().getStringExtra("email");
-        emailTextView.setText(email); // Set the email to the TextView
+        emailTextView.setText(email);
 
-        // Set click listener for Confirm OTP button
         btnConfirmOtp.setOnClickListener(v -> {
             String otp = otpInput.getText().toString().trim();
             if (!otp.isEmpty()) {
@@ -47,7 +44,6 @@ public class OtpVerificationActivity extends AppCompatActivity {
             }
         });
 
-        // Set click listener for Resend OTP button
         btnBackOtp.setOnClickListener(v -> {
             Intent intent = new Intent(OtpVerificationActivity.this, OtpActivity.class);
             startActivity(intent);
@@ -56,10 +52,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
     }
 
 
-    // Method to verify the OTP
     private void verifyOtp(String email, String otp) {
         NetworkService apiService = NetworkClient.getClient().create(NetworkService.class);
-        Call<ResponseBody> call = apiService.verifyOtp(email, otp); // Your verification API call
+        Call<ResponseBody> call = apiService.verifyOtp(email, otp);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -71,10 +66,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
                         if (jsonResponse.getString("status").equals("success")) {
                             Toast.makeText(OtpVerificationActivity.this, "OTP verified successfully!", Toast.LENGTH_SHORT).show();
 
-                            // Redirect to ResetPasswordActivity
                             Intent intent = new Intent(OtpVerificationActivity.this, ResetPasswordActivity.class);
                             startActivity(intent);
-                            finish(); // Optionally finish the current activity
+                            finish();
                         } else {
                             Toast.makeText(OtpVerificationActivity.this, jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
                         }
