@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +24,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private EditText txtConfirmPassword;
     private Button btnResetPassword;
     private TextView txtEmail;
+    private TextView txtName; // TextView to display the name
     private ImageView btnToggleNewPwd;
     private ImageView btnToggleConfirmPwd;
 
@@ -37,11 +40,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
         txtConfirmPassword = findViewById(R.id.confirmPasswordInput);
         btnResetPassword = findViewById(R.id.btnResetPassword);
         txtEmail = findViewById(R.id.txtEmail);
+        txtName = findViewById(R.id.txtUsername); // Initialize the name TextView
         btnToggleNewPwd = findViewById(R.id.btnToggleNewPwd);
         btnToggleConfirmPwd = findViewById(R.id.btnToggleConfirmPwd);
 
         String email = getIntent().getStringExtra("email");
         txtEmail.setText("Email: " + email);
+
+        fetchUserName(email);
 
         btnResetPassword.setOnClickListener(v -> {
             String newPassword = txtNewPassword.getText().toString().trim();
@@ -53,29 +59,48 @@ public class ResetPasswordActivity extends AppCompatActivity {
             }
         });
 
-        btnToggleNewPwd.setOnClickListener(v -> {
-            if (isNewPasswordVisible) {
-                txtNewPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                btnToggleNewPwd.setImageResource(R.drawable.ic_visibility_off);
-            } else {
-                txtNewPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                btnToggleNewPwd.setImageResource(R.drawable.ic_visibility_on);
-            }
-            txtNewPassword.setSelection(txtNewPassword.length());
-            isNewPasswordVisible = !isNewPasswordVisible;
-        });
+        btnToggleNewPwd.setOnClickListener(v -> togglePasswordVisibility(txtNewPassword, btnToggleNewPwd, isNewPasswordVisible));
 
-        btnToggleConfirmPwd.setOnClickListener(v -> {
-            if (isConfirmPasswordVisible) {
-                txtConfirmPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                btnToggleConfirmPwd.setImageResource(R.drawable.ic_visibility_off);
-            } else {
-                txtConfirmPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                btnToggleConfirmPwd.setImageResource(R.drawable.ic_visibility_on);
+        btnToggleConfirmPwd.setOnClickListener(v -> togglePasswordVisibility(txtConfirmPassword, btnToggleConfirmPwd, isConfirmPasswordVisible));
+    }
+
+    private void fetchUserName(String email) {
+        NetworkService apiService = NetworkClient.getClient().create(NetworkService.class);
+        Call<ResponseBody> call = apiService.getUserName(email); // Add this API call
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String name = response.body().string(); // Handle IOException
+                        txtName.setText("Username: " + name);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        txtName.setText("Error reading name");
+                    }
+                } else {
+                    txtName.setText("Name: Not found");
+                }
             }
-            txtConfirmPassword.setSelection(txtConfirmPassword.length());
-            isConfirmPasswordVisible = !isConfirmPasswordVisible;
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(ResetPasswordActivity.this, "Failed to fetch user name: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
+    }
+
+    private void togglePasswordVisibility(EditText editText, ImageView imageView, boolean isVisible) {
+        if (isVisible) {
+            editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            imageView.setImageResource(R.drawable.ic_visibility_off);
+        } else {
+            editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            imageView.setImageResource(R.drawable.ic_visibility_on);
+        }
+        editText.setSelection(editText.length());
+        isVisible = !isVisible;
     }
 
     private void resetPassword(String email, String newPassword) {

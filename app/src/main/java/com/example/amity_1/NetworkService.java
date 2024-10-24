@@ -13,6 +13,10 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface NetworkService {
+
+    @GET("getUserName.php")
+    Call<ResponseBody> getUserName(@Query("email") String email);
+
     @GET("patients.php")
     Call<PatientResponseModel> getPatients();
 
