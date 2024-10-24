@@ -368,17 +368,6 @@
                     android:textSize="20sp" />
 
                 <Button
-                    android:id="@+id/addFiles"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginBottom="16dp"
-                    android:backgroundTint="#0064F7"
-                    android:fontFamily="@font/geologicaregular"
-                    android:text="@string/upload_files"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-
-                <Button
                     android:id="@+id/addPatient"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"

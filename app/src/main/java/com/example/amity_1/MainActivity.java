@@ -3,7 +3,6 @@ package com.example.amity_1;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +35,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int PICK_IMAGE_REQUEST = 2;
     private static final String TAG = "MainActivity";
 
@@ -74,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        findViewById(R.id.addFiles).setOnClickListener(v -> showImageChoiceDialog());
         findViewById(R.id.addPatient).setOnClickListener(v -> collectAndAddPatientData());
         findViewById(R.id.fileBtn).setOnClickListener(v -> openActivity(FileActivity.class));
         findViewById(R.id.staffBtn).setOnClickListener(v -> openActivity(StaffActivity.class));
@@ -108,65 +104,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showImageChoiceDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Choose an image option")
-                .setItems(new String[]{"Upload Image", "Take Photo"}, (dialog, which) -> {
-                    if (which == 0) openGallery();
-                    else if (which == 1) launchCamera();
-                })
-                .show();
-    }
-
-    private void openGallery() {
-        startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI), PICK_IMAGE_REQUEST);
-    }
-
-    private void launchCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE_CAPTURE && data != null) {
-                uploadDocument((Bitmap) data.getExtras().get("data"));
-            } else if (requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
-                uploadImageFromGallery(data.getData());
-            }
-        }
-    }
-
-    private void uploadImageFromGallery(Uri uri) {
-        uploadFile(new File(uri.getPath()));
-    }
-
-    private void uploadDocument(Bitmap imageBitmap) {
-        if (!isPatientDataValid()) return;
-        uploadFile(convertBitmapToFile(imageBitmap));
-    }
-
-    private void uploadFile(File file) {
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-
-        apiService.uploadToHostingerGallery(body).enqueue(new Callback<UploadResponseModel>() {
-            @Override
-            public void onResponse(Call<UploadResponseModel> call, Response<UploadResponseModel> response) {
-                Toast.makeText(MainActivity.this, response.isSuccessful() ? "Image uploaded successfully" : "Failed to upload image", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<UploadResponseModel> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Image upload failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void collectAndAddPatientData() {
         collectPatientData();
         if (!isPatientDataValid()) {
@@ -180,11 +117,11 @@ public class MainActivity extends AppCompatActivity {
         name = getTextFromEditText(R.id.ptntsNameTxt);
         address = getTextFromEditText(R.id.ptntsAddressTxt);
         phone = getTextFromEditText(R.id.ptntsPhoneTxt);
-        birthday = dateBirth.getText().toString(); // Changed to match with API
-        checkup_date = dateCheckTxt.getText().toString(); // Changed to match with API
-        blood_pressure = getTextFromEditText(R.id.bloodPressureTxt); // Changed to match with API
-        pulse_rate = getTextFromEditText(R.id.pulseRateTxt); // Changed to match with API
-        resp_rate = getTextFromEditText(R.id.respRateTxt); // Changed to match with API
+        birthday = dateBirth.getText().toString();
+        checkup_date = dateCheckTxt.getText().toString();
+        blood_pressure = getTextFromEditText(R.id.bloodPressureTxt);
+        pulse_rate = getTextFromEditText(R.id.pulseRateTxt);
+        resp_rate = getTextFromEditText(R.id.respRateTxt);
         weight = getTextFromEditText(R.id.weightTxt);
         temperature = getTextFromEditText(R.id.temperatureTxt);
         cc = getTextFromEditText(R.id.ccTxt);
@@ -204,8 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 .enqueue(new Callback<PatientResponseModel>() {
                     @Override
                     public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
-                        Toast.makeText(MainActivity.this, response.isSuccessful() ? "Patient added APAKAANGAS successfully" : "Failed to add patient", Toast.LENGTH_SHORT).show();
-                        if (response.isSuccessful()) showImageChoiceDialog();
+                        Toast.makeText(MainActivity.this, response.isSuccessful() ? "Patient added successfully" : "Failed to add patient", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -217,17 +153,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isPatientDataValid() {
         return !name.isEmpty() && !address.isEmpty() && !phone.isEmpty() && !birthday.isEmpty() && !checkup_date.isEmpty();
-    }
-
-    private File convertBitmapToFile(Bitmap bitmap) {
-        File file = new File(getCacheDir(), "patient_image.jpg");
-        try (FileOutputStream out = new FileOutputStream(file)) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            return file;
-        } catch (IOException e) {
-            Log.e(TAG, "Error converting bitmap to file", e);
-            return null;
-        }
     }
 
     private void showDatePickerDialog(TextView textView) {
