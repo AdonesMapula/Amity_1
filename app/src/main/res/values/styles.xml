@@ -1,18 +1,14 @@
 <resources>
     <!-- Custom DatePickerDialog style -->
-    <style name="CustomDatePickerTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+    <style name="CustomDatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
         <!-- Customize the header color (the top section) -->
         <item name="colorPrimary">#B3D1FF</item> <!-- Example primary color -->
-
         <!-- Customize the accent color (highlighted dates and buttons) -->
         <item name="colorAccent">#000000</item>
-
         <!-- Customize the calendar background color -->
         <item name="android:background">#0064F7</item>
-
         <!-- Customize the text color -->
         <item name="android:textColorPrimary">#B3D1FF</item>
-
         <!-- Customize button colors -->
         <item name="android:buttonTint">#B3D1FF</item>
     </style>

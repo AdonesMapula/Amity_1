@@ -1,6 +1,5 @@
 package com.example.amity_1;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -24,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 2;
     private static final String TAG = "MainActivity";
 
     private NetworkService apiService;
@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private String blood_pressure, pulse_rate, resp_rate, weight, temperature, cc, pe, dx, meds, labs;
     private TextView dateCheckTxt, dateBirth;
     private Spinner genderSpinner, statusSpinner;
-    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,13 +144,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDatePickerDialog(TextView textView) {
-        Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                (view, year, month, dayOfMonth) -> textView.setText(String.format("%d-%02d-%02d", year, month + 1, dayOfMonth)),
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select a date")
+                .build();
+
+        datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(selection);
+            textView.setText(String.format("%d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)));
+        });
     }
 
     private void openActivity(Class<?> activityClass) {

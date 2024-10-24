@@ -38,7 +38,7 @@ public interface NetworkService {
     @FormUrlEncoded
     @POST("verifyOtp.php")
     Call<ResponseBody> verifyOtp(
-            @Field("email") String email,
+            @Field("user_email") String email,
             @Field("otp") String otp
     );
     @FormUrlEncoded

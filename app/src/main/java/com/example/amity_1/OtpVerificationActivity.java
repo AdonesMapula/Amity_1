@@ -51,7 +51,6 @@ public class OtpVerificationActivity extends AppCompatActivity {
         });
     }
 
-
     private void verifyOtp(String email, String otp) {
         NetworkService apiService = NetworkClient.getClient().create(NetworkService.class);
         Call<ResponseBody> call = apiService.verifyOtp(email, otp);
@@ -63,28 +62,33 @@ public class OtpVerificationActivity extends AppCompatActivity {
                     try {
                         String responseString = response.body().string();
                         JSONObject jsonResponse = new JSONObject(responseString);
+
                         if (jsonResponse.getString("status").equals("success")) {
                             Toast.makeText(OtpVerificationActivity.this, "OTP verified successfully!", Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(OtpVerificationActivity.this, ResetPasswordActivity.class);
+                            intent.putExtra("email", email);
                             startActivity(intent);
                             finish();
                         } else {
+                            // Handle the error message from the server
                             Toast.makeText(OtpVerificationActivity.this, jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Toast.makeText(OtpVerificationActivity.this, "Error parsing response", Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    // Handle response not successful
                     Toast.makeText(OtpVerificationActivity.this, "Verification failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Handle network errors
                 Toast.makeText(OtpVerificationActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }
