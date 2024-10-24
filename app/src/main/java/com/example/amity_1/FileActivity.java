@@ -2,6 +2,7 @@ package com.example.amity_1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,6 +82,7 @@ public class FileActivity extends AppCompatActivity {
         patientAdapter.notifyDataSetChanged();
     }
 
+
     private void setupSearchView() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -107,11 +109,18 @@ public class FileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    updatePatientList(response.body().getData());
+                    List<Patient> patients = response.body().getData();
+                    Log.d("FileActivity", "Fetched Patients: " + patients.toString()); // Log the patients
+                    if (patients.isEmpty()) {
+                        showError("No patients found");
+                    } else {
+                        updatePatientList(patients);
+                    }
                 } else {
-                    showError("Search failed: " + response.message());
+                    showError("Failed to fetch patients: " + response.message());
                 }
             }
+
 
             @Override
             public void onFailure(Call<PatientResponseModel> call, Throwable t) {

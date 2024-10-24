@@ -11,12 +11,12 @@ public class PatientResponseModel {
     @SerializedName("data")
     private List<Patient> data;
 
-    // Old properties (if necessary for backward compatibility)
+
     @SerializedName("success")
-    private String success; // Retain this only if needed
+    private String success;
 
     @SerializedName("message")
-    private String message; // Retain this only if needed
+    private String message;
 
     public String getStatus() {
         return status;
@@ -26,7 +26,6 @@ public class PatientResponseModel {
         return data;
     }
 
-    // Getters for old properties if needed
     public String getSuccess() {
         return success;
     }

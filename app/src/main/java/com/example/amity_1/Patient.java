@@ -1,5 +1,9 @@
 package com.example.amity_1;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Patient {
     private String id;
     private String name;
@@ -36,8 +40,45 @@ public class Patient {
     public String getGender() { return gender; }
     public String getStatus() { return status; }
     public String getBirthday() { return birthday; }
-    public String getCheckupDate() { return checkupDate; }
+    public String getCheckupDate() {
+        return checkupDate != null ? checkupDate : "No Checkup Date";
+    }
     public String getCreatedAt() { return createdAt; }
     public String getUpdatedAt() { return updatedAt; }
     public VitalSigns getVitals() { return vitals; }
+
+    public String getFormattedCheckupDate() {
+        if (checkupDate == null) return "No Checkup Date";
+
+        String formattedDate = "";
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+        try {
+            Date date = inputFormat.parse(checkupDate);
+            formattedDate = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return formattedDate;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", gender='" + gender + '\'' +
+                ", status='" + status + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", checkupDate='" + checkupDate + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", vitals=" + vitals +
+                '}';
+    }
 }

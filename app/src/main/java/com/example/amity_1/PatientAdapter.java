@@ -1,11 +1,14 @@
 package com.example.amity_1;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,13 +18,13 @@ import java.util.List;
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientViewHolder> implements Filterable {
 
     private List<Patient> patientList;
-    private List<Patient> patientListFull; // For holding the original data
+    private List<Patient> patientListFull;
     private Context context;
 
     public PatientAdapter(List<Patient> patientList, Context context) {
         this.patientList = patientList;
         this.context = context;
-        this.patientListFull = new ArrayList<>(patientList); // Create a copy of the original list
+        this.patientListFull = new ArrayList<>(patientList);
     }
 
     @NonNull
@@ -34,8 +37,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
     @Override
     public void onBindViewHolder(@NonNull PatientViewHolder holder, int position) {
         Patient patient = patientList.get(position);
-        holder.nameTextView.setText(patient.getName()); // Adjust as needed for your Patient class
-        holder.checkupDateTextView.setText(patient.getCheckupDate()); // Adjust for your data
+        holder.nameTextView.setText(patient.getName());
+        String checkupDate = patient.getCheckupDate();
+        Log.d("PatientAdapter", "Checkup Date for " + patient.getName() + ": " + checkupDate);
+        holder.checkupDateTextView.setText(checkupDate);
     }
 
     @Override
@@ -53,20 +58,15 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Patient> filteredPatients = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredPatients.addAll(patientListFull); // No filter, return original list
+                filteredPatients.addAll(patientListFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
-                // Filter the list based on name, phone number, or address
                 for (Patient patient : patientListFull) {
-                    if (patient.getName().toLowerCase().contains(filterPattern) ||
-                            patient.getPhoneNumber().toLowerCase().contains(filterPattern) || // Assuming you have a getPhone method
-                            patient.getAddress().toLowerCase().contains(filterPattern)) { // Assuming you have a getAddress method
+                    if (patient.getName().toLowerCase().contains(filterPattern)) {
                         filteredPatients.add(patient);
                     }
                 }
             }
-
             FilterResults results = new FilterResults();
             results.values = filteredPatients;
             return results;
@@ -76,7 +76,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
         @SuppressWarnings("unchecked")
         protected void publishResults(CharSequence constraint, FilterResults results) {
             patientList.clear();
-            patientList.addAll((List) results.values);
+            patientList.addAll((List<Patient>) results.values);
             notifyDataSetChanged();
         }
     };
@@ -86,8 +86,8 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
         PatientViewHolder(View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.patientNameTextView); // Adjust based on your layout
-            checkupDateTextView = itemView.findViewById(R.id.checkupDateTextView); // Adjust based on your layout
+            nameTextView = itemView.findViewById(R.id.patientNameTextView);
+            checkupDateTextView = itemView.findViewById(R.id.checkupDateTextView);
         }
     }
 }

@@ -47,6 +47,7 @@ public interface NetworkService {
             @Field("name") String name,
             @Field("password") String password
     );
+
     @FormUrlEncoded
     @POST("add_patient.php")
     Call<PatientResponseModel> addPatient(
