@@ -6,8 +6,9 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -18,15 +19,12 @@
         android:theme="@style/Theme.Amity_1"
         android:windowSoftInputMode="adjustResize">
         <activity
-            android:name=".otpVerificationActivity"
+            android:name=".ResetPasswordActivity"
             android:exported="false" />
-        <!-- Adjust Keyboard Layout -->
-        <!-- OTP Phone Activity -->
         <activity
-            android:name=".otpPhone"
-            android:exported="false"
-            android:label="@string/title_activity_otp_phone"
-            android:theme="@style/Theme.Amity_1.NoActionBar" /> <!-- OTP Activity -->
+            android:name=".OtpVerificationActivity"
+            android:exported="false" /> <!-- Adjust Keyboard Layout -->
+        <!-- OTP Phone Activity -->
         <activity
             android:name=".OtpActivity"
             android:exported="false" /> <!-- Monthly Graph Fragment -->
@@ -49,7 +47,7 @@
         <activity
             android:name=".FileActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" /> <!-- Staff Activity -->
+            android:windowSoftInputMode="adjustPan" /> <!-- Staff Activity -->
         <activity
             android:name=".StaffActivity"
             android:exported="true" /> <!-- Patient File Activity -->

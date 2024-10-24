@@ -18,31 +18,35 @@ import retrofit2.http.Part;
 public interface NetworkService {
 
     @FormUrlEncoded
-    @POST("send_otp.php")
+    @POST("resend_otp.php")  // Adjust based on your actual endpoint
+    Call<ResponseBody> resendOtp(
+            @Field("email_or_phone") String emailOrPhone
+    );
+    @FormUrlEncoded
+    @POST("reset_password.php") // Replace with your actual endpoint
+    Call<ResponseBody> resetPassword(
+            @Field("email") String email,
+            @Field("new_password") String newPassword
+    );
+    @FormUrlEncoded
+    @POST("sendOtp.php")
     Call<ResponseBody> sendOtp(
             @Field("email") String email
     );
-    @POST("send_otp_phone.php")
-    Call<ResponseBody> sendOtpToPhone(@Body String phone);
-
     @FormUrlEncoded
-    @POST("verify_otp.php")
+    @POST("verifyOtp.php")
     Call<ResponseBody> verifyOtp(
             @Field("email") String email,
             @Field("otp") String otp
     );
-
-    // Login user
     @FormUrlEncoded
     @POST("login.php")
     Call<LoginResponseModel> login(
             @Field("name") String name,
             @Field("password") String password
     );
-
-    // Add patient to the database
-    @POST("add_patient.php")
     @FormUrlEncoded
+    @POST("add_patient.php") // Make sure this matches your PHP file
     Call<PatientResponseModel> addPatient(
             @Field("name") String name,
             @Field("address") String address,
@@ -50,10 +54,10 @@ public interface NetworkService {
             @Field("gender") String gender,
             @Field("status") String status,
             @Field("birthday") String birthday,
-            @Field("checkup_date") String checkupDate,
-            @Field("blood_pressure") String bloodPressure,
-            @Field("pulse_rate") String pulseRate,
-            @Field("resp_rate") String respRate,
+            @Field("checkup_date") String checkup_date,
+            @Field("blood_pressure") String blood_pressure,
+            @Field("pulse_rate") String pulse_rate,
+            @Field("resp_rate") String resp_rate,
             @Field("weight") String weight,
             @Field("temperature") String temperature,
             @Field("cc") String cc,
@@ -62,9 +66,6 @@ public interface NetworkService {
             @Field("meds") String meds,
             @Field("labs") String labs
     );
-
-
-    // Upload scanned document to the server
     @Multipart
     @POST("upload_document.php")
     Call<UploadResponseModel> uploadDocument(
@@ -72,15 +73,12 @@ public interface NetworkService {
             @Part MultipartBody.Part document
     );
     @Multipart
-    @POST("upload.php") // Adjust this to your actual upload endpoint on Hostinger
+    @POST("upload.php")
     Call<UploadResponseModel> uploadToHostingerGallery(@Part MultipartBody.Part file);
 
-
-    // Retrieve all patients data from Hostinger
     @GET("get_patients.php")
     Call<PatientResponseModel> getPatients(); // Change the response model
 
-    // Retrieve monthly patients data
     @GET("fetch_monthly_data.php")
     Call<GraphDataResponseModel> getMonthlyGraphData();
 

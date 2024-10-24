@@ -5,6 +5,75 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".otpVerificationActivity">
+    tools:context=".OtpVerificationActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="317dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/emailTextView"
+        app:layout_constraintStart_toStartOf="@+id/emailTextView"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView">
+
+        <EditText
+            android:id="@+id/otpInputField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter OTP"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/btnVerifyOtp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#0064F6"
+            android:text="Verify OTP"
+            android:textColor="#FFF" />
+
+        <Button
+            android:id="@+id/btnBackOtp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#0064F6"
+            android:text="Go back and Check Email"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/verifyTxt"
+        android:layout_width="350dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="135dp"
+        android:layout_marginEnd="25dp"
+        android:fontFamily="@font/geologicaregular"
+        android:text="Enter the OTP sent to your email"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emailTextView"
+        android:layout_width="300dp"
+        android:layout_height="30sp"
+        android:fontFamily="@font/geologicaregular"
+        android:textColor="#0064F6"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="@+id/verifyTxt"
+        app:layout_constraintStart_toStartOf="@+id/verifyTxt"
+        app:layout_constraintTop_toBottomOf="@+id/verifyTxt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

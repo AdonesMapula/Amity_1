@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 .enqueue(new Callback<PatientResponseModel>() {
                     @Override
                     public void onResponse(Call<PatientResponseModel> call, Response<PatientResponseModel> response) {
-                        Toast.makeText(MainActivity.this, response.isSuccessful() ? "Patient added successfully" : "Failed to add patient", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, response.isSuccessful() ? "Patient added APAKAANGAS successfully" : "Failed to add patient", Toast.LENGTH_SHORT).show();
                         if (response.isSuccessful()) showImageChoiceDialog();
                     }
 
